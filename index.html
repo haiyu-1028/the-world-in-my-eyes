@@ -218,14 +218,32 @@ const defaultData = {
   curator: { name:'张昊文', role:'策展人 · 摄影研究者', bio:'张昊文，独立策展人、摄影批评写作者。专注于当代摄影与视觉文化研究，关注图像如何塑造我们的记忆与身份认同。曾策划多个摄影展览项目，致力于在技术与人文的交汇处寻找摄影的新可能。\n\n联系方式：haowen.zhang@example.com' }
 };
 
+// ===== 从远程 JSON 加载数据 =====
+async function loadRemoteData() {
+  try {
+    const resp = await fetch('./data.json?_=' + Date.now());
+    if (!resp.ok) throw new Error('No remote data');
+    const remoteData = await resp.json();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteData));
+    console.log('✅ 已加载远程数据');
+    return true;
+  } catch(e) {
+    console.log('ℹ️ 未找到远程数据，使用本地默认');
+    return false;
+  }
+}
+
 function getData(){return JSON.parse(localStorage.getItem(STORAGE_KEY))||defaultData}
 function saveData(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 
 // ============ 初始化 ============
-if(!localStorage.getItem(STORAGE_KEY)) saveData(defaultData);
 if(!localStorage.getItem(ACCOUNT_KEY)) localStorage.setItem(ACCOUNT_KEY,JSON.stringify(defaultAccount));
 
-renderHome();
+(async () => {
+  await loadRemoteData();
+  if(!localStorage.getItem(STORAGE_KEY)) saveData(defaultData);
+  renderHome();
+})();
 
 // ============ 首页渲染 ============
 function renderHome(){
