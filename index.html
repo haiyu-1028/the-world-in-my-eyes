@@ -5,16 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>镜中世界 · 线上画廊</title>
 
-<!-- Google Fonts 英文衬线/无衬线 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<!-- Google Fonts 中文 -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-/* ========== CSS 变量（运行时由后台动态修改） ========== */
 :root{
   --klein:#002fa7;
   --green:#0d2818;
@@ -29,37 +25,14 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:var(--body-font);
-  background:var(--bg-color);
-  background-image:var(--bg-image);
-  background-size:cover;
-  background-attachment:fixed;
-  background-position:center;
-  color:#e0e0e0;
-  line-height:1.7;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:var(--bg-overlay);
-  z-index:-1;
-  pointer-events:none;
-}
+body{font-family:var(--body-font);background:var(--bg-color);background-image:var(--bg-image);background-size:cover;background-attachment:fixed;background-position:center;color:#e0e0e0;line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:var(--bg-overlay);z-index:-1;pointer-events:none}
 
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:rgba(0,0,0,0.3)}
 ::-webkit-scrollbar-thumb{background:var(--klein);border-radius:3px}
 
-/* ===== 字体工具类 ===== */
-.font-serif{font-family:var(--title-font)}
-.font-sans{font-family:var(--body-font)}
-.font-display{font-family:var(--curator-font)}
-.font-loading{font-family:var(--text-font)}
-
-/* ========== 导航 ========== */
+/* 导航 */
 .navbar{position:fixed;top:0;left:0;right:0;height:64px;background:rgba(13,40,24,0.92);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:900;border-bottom:1px solid rgba(255,255,255,0.06)}
 .nav-brand{font-size:22px;font-weight:700;letter-spacing:4px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--title-font)}
 .nav-brand svg{width:28px;height:28px}
@@ -68,18 +41,18 @@ body::before{
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,0.06)}
 .nav-admin{background:var(--klein)!important;color:#fff!important;padding:6px 20px!important;border-radius:30px!important}
 
-/* ========== Hero ========== */
+/* Hero */
 .hero{height:72vh;min-height:440px;background:linear-gradient(160deg,#0a1a10ee 0%,#001633ee 50%,#0a1a10ee 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding-top:64px;position:relative}
 .hero h1{font-size:72px;letter-spacing:14px;color:#fff;margin-bottom:16px;text-shadow:0 4px 60px rgba(0,47,167,0.4);font-family:var(--title-font);font-weight:900}
 .hero p{font-size:19px;color:rgba(255,255,255,0.55);max-width:540px;margin:0 auto;font-family:var(--body-font)}
-.hero .curator{color:var(--gold);font-size:16px;letter-spacing:3px;margin-top:14px;font-family:var(--curator-font);font-size:18px}
+.hero .curator{color:var(--gold);font-size:18px;letter-spacing:3px;margin-top:14px;font-family:var(--curator-font)}
 
-/* ========== Section ========== */
+/* Section */
 .section{max-width:1200px;margin:0 auto;padding:80px 24px}
 .section-title{font-size:34px;letter-spacing:5px;color:#fff;margin-bottom:48px;text-align:center;font-family:var(--title-font)}
 .section-title::after{content:'';display:block;width:50px;height:2px;background:var(--klein);margin:14px auto 0}
 
-/* ========== 展览卡片 ========== */
+/* 展览卡片 */
 .exhibition-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
 .exhibition-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px 28px;cursor:pointer;transition:.4s;position:relative;overflow:hidden}
 .exhibition-card:hover{border-color:var(--klein);transform:translateY(-6px);background:rgba(255,255,255,0.07);box-shadow:0 12px 40px rgba(0,47,167,0.15)}
@@ -90,34 +63,50 @@ body::before{
 .exhibition-card .enter-hint{color:var(--klein);font-size:13px;margin-top:14px;opacity:0;transition:.4s}
 .exhibition-card:hover .enter-hint{opacity:1}
 
-/* ========== 专栏 ========== */
-.column-article{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px 30px;margin-bottom:20px;transition:.3s}
+/* 专栏 */
+.column-article{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px 30px;margin-bottom:20px}
 .column-article:hover{border-color:rgba(0,47,167,0.3)}
 .column-article h3{font-size:21px;color:#fff;margin-bottom:4px;font-family:var(--title-font)}
 .column-article .date{color:rgba(255,255,255,0.3);font-size:13px;margin-bottom:10px}
 .column-article .body{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.9;white-space:pre-wrap}
 
-/* ========== 策展人 ========== */
-.curator-card{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:36px 34px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
-.curator-portrait{width:140px;height:140px;border-radius:50%;object-fit:cover;background:#111;border:2px solid rgba(255,255,255,0.1);flex-shrink:0}
-.curator-info{flex:1;min-width:240px}
-.curator-info h3{font-size:28px;color:#fff;font-family:var(--title-font)}
-.curator-info .role{color:var(--gold);font-size:14px;letter-spacing:2px;margin:6px 0 14px;font-family:var(--curator-font);font-size:16px}
-.curator-info .bio{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.9;white-space:pre-wrap}
+/* 策展人 - 大气典雅版 */
+.curator-section{margin-bottom:60px}
+.curator-block{position:relative;display:flex;align-items:stretch;gap:0;margin-bottom:80px;min-height:480px;border-radius:24px;overflow:hidden;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06)}
+/* 左侧写真区 */
+.curator-portrait-wrap{flex:0 0 42%;position:relative;overflow:hidden;background:#080f0a}
+.curator-portrait-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(0,47,167,0.15) 0%,transparent 60%);z-index:1;pointer-events:none}
+.curator-portrait-wrap::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 80px rgba(0,0,0,0.6);z-index:2;pointer-events:none}
+.curator-portrait{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:contrast(1.05) brightness(0.92) saturate(0.9)}
+.curator-portrait-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;color:rgba(255,255,255,0.12)}
+.curator-portrait-placeholder .placeholder-icon{font-size:64px;opacity:0.3}
+.curator-portrait-placeholder .placeholder-text{font-size:14px;letter-spacing:3px}
+/* 右侧信息区 */
+.curator-info-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 52px;position:relative;background:linear-gradient(135deg,rgba(255,255,255,0.03) 0%,rgba(255,255,255,0.01) 100%)}
+.curator-info-wrap::before{content:'';position:absolute;top:24px;left:32px;width:40px;height:2px;background:var(--klein);opacity:0.6}
+.curator-name{font-size:42px;color:#fff;font-family:var(--title-font);font-weight:900;letter-spacing:4px;margin-bottom:6px;line-height:1.2}
+.curator-role-text{font-size:18px;color:var(--gold);font-family:var(--curator-font);letter-spacing:2px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.curator-bio-text{font-size:15px;color:rgba(255,255,255,0.55);line-height:2;white-space:pre-wrap;font-family:var(--body-font)}
+.curator-bio-text a,.curator-bio-text{color:rgba(255,255,255,0.55)}
+.curator-contact{margin-top:20px;font-size:14px;color:rgba(201,168,76,0.7);letter-spacing:1px;font-family:var(--curator-font)}
+/* 索引编号 */
+.curator-index{position:absolute;top:24px;right:32px;font-size:13px;color:rgba(255,255,255,0.2);letter-spacing:3px;font-family:var(--curator-font);z-index:3}
+/* 交错排列：偶数项左右互换 */
+.curator-block:nth-child(even){flex-direction:row-reverse}
+.curator-block:nth-child(even) .curator-info-wrap::before{left:auto;right:32px}
+.curator-block:nth-child(even) .curator-index{right:auto;left:32px}
+/* 响应式 */
+@media(max-width:900px){
+  .curator-block{flex-direction:column!important;min-height:auto}
+  .curator-portrait-wrap{flex:0 0 320px;min-height:320px}
+  .curator-info-wrap{padding:32px 28px}
+  .curator-name{font-size:30px}
+}
 
-/* 多策展人 */
-.curator-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
-.curator-card-item{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:28px;display:flex;gap:20px;align-items:flex-start;transition:.3s}
-.curator-card-item:hover{border-color:rgba(0,47,167,0.3)}
-.curator-card-item .portrait{width:100px;height:100px;border-radius:50%;object-fit:cover;background:#111;border:2px solid rgba(255,255,255,0.1)}
-.curator-card-item .info h4{font-size:20px;color:#fff;font-family:var(--title-font)}
-.curator-card-item .info .role{color:var(--gold);font-size:13px;margin:2px 0 8px}
-.curator-card-item .info .bio{color:rgba(255,255,255,0.45);font-size:13px;line-height:1.7;white-space:pre-wrap}
-
-/* ========== 页脚 ========== */
+/* 页脚 */
 .footer{text-align:center;padding:40px 24px;color:rgba(255,255,255,0.2);font-size:13px;border-top:1px solid rgba(255,255,255,0.04)}
 
-/* ========== 展览详情页 ========== */
+/* 展览详情 */
 .detail-page{display:none;min-height:100vh;padding-top:64px}
 .detail-back{padding:24px 32px 0;max-width:1200px;margin:0 auto}
 .detail-back a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:14px;cursor:pointer;transition:.3s}
@@ -127,90 +116,26 @@ body::before{
 .detail-header .statement{color:rgba(255,255,255,0.5);font-size:15px;line-height:1.9;max-width:800px}
 .detail-works{max-width:1200px;margin:0 auto;padding:20px 32px 60px}
 
-/* ========== 组照卡片（带背景板和灯光阴影） ========== */
-.work-group{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:18px;
-  padding:36px 32px;
-  margin-bottom:40px;
-  transition:.3s;
-  position:relative;
-}
+/* 组照 + 背景板 */
+.work-group{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:36px 32px;margin-bottom:40px;transition:.3s;position:relative}
 .work-group:hover{box-shadow:0 8px 30px rgba(0,47,167,0.1)}
-
-/* 背景板（每张照片后面的展板） */
-.photo-board{
-  position:relative;
-  background:#1a1a1a;
-  border-radius:6px;
-  padding:14px 14px 18px;
-  margin-bottom:14px;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.5),
-    0 12px 36px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  transition:.4s;
-}
-.photo-board::before{
-  /* 模拟灯光从上方照射的渐变 */
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  background:linear-gradient(170deg, rgba(255,255,255,0.04) 0%, transparent 40%, rgba(0,0,0,0.2) 100%);
-  border-radius:6px;
-  pointer-events:none;
-}
-.photo-board .board-color-bar{
-  position:absolute;
-  top:0;left:0;right:0;
-  height:4px;
-  border-radius:6px 6px 0 0;
-  background:var(--board-color,#002fa7);
-  opacity:0.8;
-}
-.photo-board img{
-  width:100%;
-  aspect-ratio:4/3;
-  object-fit:cover;
-  display:block;
-  border-radius:3px;
-  background:#0a0a0a;
-}
-.photo-board .photo-caption{
-  text-align:center;
-  color:rgba(255,255,255,0.5);
-  font-size:12px;
-  margin-top:8px;
-  font-family:var(--curator-font);
-}
-.photo-board:hover{
-  transform:translateY(-3px);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.55),
-    0 20px 50px rgba(0,0,0,0.4),
-    0 0 40px rgba(0,47,167,0.08);
-}
-
-.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-
-/* 组照标题区 */
 .work-group-title{font-size:22px;color:#fff;margin-bottom:4px;font-family:var(--title-font);letter-spacing:1px}
 .work-group-desc{color:rgba(255,255,255,0.45);font-size:14px;line-height:1.8;margin:8px 0 18px;white-space:pre-wrap}
 .work-group-count{display:inline-block;background:rgba(0,47,167,0.25);color:#8ab4ff;padding:2px 12px;border-radius:20px;font-size:12px;margin-bottom:16px}
 
-/* 背景板颜色选择器 */
-.board-color-picker{display:flex;gap:8px;align-items:center;margin:8px 0 14px;flex-wrap:wrap}
-.board-color-picker label{color:rgba(255,255,255,0.5);font-size:13px}
-.board-color-swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.15);transition:.2s}
-.board-color-swatch:hover{border-color:#fff;transform:scale(1.1)}
-.board-color-swatch.active{border-color:var(--gold);box-shadow:0 0 8px var(--gold)}
+.photo-board{position:relative;background:#1a1a1a;border-radius:6px;padding:14px 14px 18px;margin-bottom:14px;box-shadow:0 4px 12px rgba(0,0,0,0.5),0 12px 36px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.05);transition:.4s}
+.photo-board::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(170deg,rgba(255,255,255,0.04) 0%,transparent 40%,rgba(0,0,0,0.2) 100%);border-radius:6px;pointer-events:none}
+.photo-board .board-color-bar{position:absolute;top:0;left:0;right:0;height:4px;border-radius:6px 6px 0 0;background:var(--board-color,#002fa7);opacity:0.8}
+.photo-board img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:3px;background:#0a0a0a}
+.photo-board .photo-caption{text-align:center;color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px;font-family:var(--curator-font);font-size:13px}
+.photo-board:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.55),0 20px 50px rgba(0,0,0,0.4),0 0 40px rgba(0,47,167,0.08)}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
 
-/* ========== 大图灯箱 ========== */
+/* 灯箱 */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);backdrop-filter:blur(6px);z-index:8000;display:none;align-items:center;justify-content:center;flex-direction:column}
 .lightbox.active{display:flex}
 .lightbox img{max-width:90vw;max-height:78vh;object-fit:contain;border-radius:8px;box-shadow:0 8px 60px rgba(0,0,0,0.6)}
-.lightbox .lb-info{color:rgba(255,255,255,0.7);font-size:14px;margin-top:14px;text-align:center;font-family:var(--curator-font);font-size:16px}
+.lightbox .lb-info{color:rgba(255,255,255,0.7);font-size:16px;margin-top:14px;text-align:center;font-family:var(--curator-font)}
 .lightbox .lb-close{position:absolute;top:24px;right:32px;font-size:34px;color:rgba(255,255,255,0.5);cursor:pointer;transition:.3s;background:none;border:none}
 .lightbox .lb-close:hover{color:#fff}
 .lightbox .lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:rgba(255,255,255,0.4);cursor:pointer;transition:.3s;background:none;border:none;padding:20px}
@@ -218,15 +143,17 @@ body::before{
 .lightbox .lb-prev{left:20px}
 .lightbox .lb-next{right:20px}
 
-/* ========== 后台 ========== */
+/* ===== 后台 ===== */
 .admin-page{display:none;min-height:100vh;padding-top:64px;background:#0a1510}
 .admin-container{display:flex;min-height:calc(100vh - 64px)}
-.admin-sidebar{width:210px;background:rgba(0,0,0,0.35);padding:24px 0;border-right:1px solid rgba(255,255,255,0.05);flex-shrink:0;overflow-y:auto}
+.admin-sidebar{width:220px;background:rgba(0,0,0,0.35);padding:24px 0;border-right:1px solid rgba(255,255,255,0.05);flex-shrink:0;overflow-y:auto}
 .admin-sidebar a{display:block;padding:12px 22px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:14px;transition:.3s;cursor:pointer;border-left:3px solid transparent}
 .admin-sidebar a:hover{color:#fff;background:rgba(0,47,167,0.1)}
 .admin-sidebar a.active{color:#fff;background:rgba(0,47,167,0.15);border-left-color:var(--klein)}
+.admin-sidebar .sidebar-group{color:rgba(255,255,255,0.25);font-size:11px;padding:16px 22px 4px;letter-spacing:2px;text-transform:uppercase}
 .admin-main{flex:1;padding:32px 40px;overflow-y:auto}
-.admin-main h2{font-size:24px;color:#fff;margin-bottom:24px;letter-spacing:2px;font-family:var(--title-font)}
+.admin-main h2{font-size:24px;color:#fff;margin-bottom:8px;letter-spacing:2px;font-family:var(--title-font)}
+.admin-main .subtitle{color:rgba(255,255,255,0.35);font-size:13px;margin-bottom:24px}
 .admin-form label{display:block;color:rgba(255,255,255,0.6);margin:14px 0 4px;font-size:13px}
 .admin-form input,.admin-form textarea,.admin-form select{width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none;transition:.3s;font-family:var(--body-font)}
 .admin-form input:focus,.admin-form textarea:focus{border-color:var(--klein)}
@@ -241,9 +168,30 @@ body::before{
 .admin-list-item span{color:rgba(255,255,255,0.6);font-size:14px}
 .admin-empty{color:rgba(255,255,255,0.2);text-align:center;padding:40px 0;font-size:14px}
 
-/* Toast */
-.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.88);color:#fff;padding:12px 28px;border-radius:30px;font-size:14px;z-index:9999;opacity:0;transition:.4s;pointer-events:none;font-family:var(--body-font)}
-.toast.show{opacity:1}
+/* 面包屑 */
+.breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:13px;color:rgba(255,255,255,0.35)}
+.breadcrumb a{color:rgba(255,255,255,0.5);cursor:pointer;text-decoration:none;transition:.3s}
+.breadcrumb a:hover{color:#fff}
+.breadcrumb span{color:rgba(255,255,255,0.2)}
+
+/* 实时预览卡片 */
+.preview-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px;margin-top:24px}
+.preview-card h4{color:rgba(255,255,255,0.4);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:8px}
+.preview-hero-title{font-size:42px;color:#fff;letter-spacing:6px;font-family:var(--title-font);font-weight:900;margin-bottom:8px}
+.preview-body-text{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.8;max-width:500px;font-family:var(--body-font)}
+.preview-curator-text{color:var(--gold);font-size:16px;margin-top:10px;font-family:var(--curator-font);font-size:17px}
+.preview-ex-card{background:rgba(255,255,255,0.04);border-radius:10px;padding:18px;margin-top:14px;max-width:340px;border:1px solid rgba(255,255,255,0.06)}
+.preview-ex-card h5{font-size:18px;color:#fff;font-family:var(--title-font);margin-bottom:4px}
+.preview-ex-card p{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6}
+
+/* 颜色选择器 */
+.color-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.color-row label{margin:0;min-width:auto;color:rgba(255,255,255,0.5);font-size:13px}
+.color-input{width:50px!important;height:36px!important;padding:2px!important;border-radius:8px!important;cursor:pointer;border:2px solid rgba(255,255,255,0.15)!important}
+.color-presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.color-preset{width:30px;height:30px;border-radius:50%;cursor:pointer;border:3px solid rgba(255,255,255,0.1);transition:.2s}
+.color-preset:hover{border-color:rgba(255,255,255,0.6);transform:scale(1.15)}
+.color-preset.active{border-color:var(--gold);box-shadow:0 0 10px var(--gold)}
 
 /* 上传区 */
 .upload-zone{border:2px dashed rgba(255,255,255,0.15);border-radius:14px;padding:32px;text-align:center;transition:.3s;cursor:pointer;margin-top:12px;background:rgba(255,255,255,0.02)}
@@ -251,31 +199,14 @@ body::before{
 .upload-zone.dragover{border-color:var(--klein);background:rgba(0,47,167,0.1)}
 .upload-zone p{color:rgba(255,255,255,0.4);font-size:14px;margin:8px 0}
 .upload-icon{font-size:36px;margin-bottom:8px}
-.upload-progress{margin-top:12px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;display:none}
-.upload-progress .bar{height:100%;width:0%;background:var(--klein);transition:width .3s;border-radius:2px}
 .preview-list{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
 .preview-item{position:relative;width:100px;height:100px;border-radius:8px;overflow:hidden;background:#111}
 .preview-item img{width:100%;height:100%;object-fit:cover}
 .preview-item .remove{position:absolute;top:2px;right:2px;width:20px;height:20px;background:rgba(0,0,0,0.7);color:#fff;border:none;border-radius:50%;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-/* 颜色选择器 */
-.color-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
-.color-row label{margin:0;min-width:80px;color:rgba(255,255,255,0.5);font-size:13px}
-.color-input{width:50px!important;height:36px!important;padding:2px!important;border-radius:8px!important;cursor:pointer;border:2px solid rgba(255,255,255,0.15)!important}
-.color-presets{display:flex;gap:6px;flex-wrap:wrap}
-.color-preset{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.12);transition:.2s}
-.color-preset:hover{border-color:#fff;transform:scale(1.12)}
-
-/* 字体选择器 */
-.font-row{display:flex;gap:12px;align-items:center;margin:8px 0;flex-wrap:wrap}
-.font-row label{color:rgba(255,255,255,0.5);font-size:13px;min-width:80px}
-.font-row select{width:auto!important;min-width:200px;padding:8px 14px!important}
-
-/* 策展人卡片后台 */
-.curator-admin-card{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,0.03);border-radius:14px;padding:20px;margin-bottom:16px}
-.curator-admin-card img{width:80px;height:80px;border-radius:50%;object-fit:cover;background:#111}
-.curator-admin-card .fields{flex:1}
-.curator-admin-card .fields input,.curator-admin-card .fields textarea{margin-bottom:8px}
+/* Toast */
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.88);color:#fff;padding:12px 28px;border-radius:30px;font-size:14px;z-index:9999;opacity:0;transition:.4s;pointer-events:none;font-family:var(--body-font)}
+.toast.show{opacity:1}
 
 /* 登录弹窗 */
 .login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);z-index:5000;display:none;align-items:center;justify-content:center}
@@ -287,21 +218,44 @@ body::before{
 .login-card button:hover{background:#003bb5}
 .login-card .error{color:#ff6b6b;font-size:13px;margin-top:12px;min-height:20px}
 
+/* 子页面面板 */
+.sub-panel{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:28px;margin-bottom:20px}
+.sub-panel h3{color:#fff;font-size:18px;margin-bottom:6px;font-family:var(--title-font)}
+.sub-panel p.hint{color:rgba(255,255,255,0.3);font-size:12px;margin-bottom:16px}
+
+/* 滑块 */
+input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:rgba(255,255,255,0.1);outline:none;margin:8px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--klein);cursor:pointer;border:2px solid #fff}
+
+/* 字体选择卡片 */
+.font-option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:14px}
+.font-option-card{border:2px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;cursor:pointer;transition:.3s;text-align:center;background:rgba(255,255,255,0.02)}
+.font-option-card:hover{border-color:rgba(0,47,167,0.5)}
+.font-option-card.active{border-color:var(--klein);background:rgba(0,47,167,0.08)}
+.font-option-card .sample{font-size:22px;color:#fff;margin-bottom:6px}
+.font-option-card .name{font-size:12px;color:rgba(255,255,255,0.4)}
+
+/* 背景图预览 */
+.bg-preview{margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);height:140px;background:#111;position:relative}
+.bg-preview img{width:100%;height:100%;object-fit:cover;opacity:0.6}
+.bg-preview .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:13px}
+
+/* 保存栏（固定底部） */
+.save-bar{position:sticky;bottom:0;background:rgba(10,21,16,0.95);backdrop-filter:blur(10px);padding:14px 0;margin-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:12px;align-items:center;z-index:10}
+.save-bar .status{color:rgba(255,255,255,0.35);font-size:13px;margin-left:auto}
+.save-bar .saved{color:#4caf50!important}
+
 /* 响应式 */
-@media(max-width:768px){
-  .hero h1{font-size:42px;letter-spacing:6px}
-  .exhibition-grid{grid-template-columns:1fr}
-  .photo-grid{grid-template-columns:1fr 1fr}
-  .admin-sidebar{width:120px}
+@media(max-width:900px){
+  .admin-sidebar{width:140px}
   .admin-sidebar a{padding:10px 14px;font-size:12px}
   .admin-main{padding:20px}
-  .curator-card{flex-direction:column}
+  .preview-hero-title{font-size:28px}
 }
 </style>
 </head>
 <body>
 
-<!-- 导航 -->
 <nav class="navbar">
   <div class="nav-brand" onclick="showHome()">
     <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="20" r="10" stroke="currentColor" stroke-width="1.2"/><circle cx="29" cy="11" r="3" fill="currentColor" opacity="0.6"/></svg>
@@ -315,7 +269,6 @@ body::before{
   </div>
 </nav>
 
-<!-- 登录弹窗 -->
 <div class="login-overlay" id="loginOverlay">
   <div class="login-card">
     <h2>🔐 内部管理</h2>
@@ -326,59 +279,33 @@ body::before{
   </div>
 </div>
 
-<!-- ===== 首页 ===== -->
+<!-- 首页 -->
 <div id="homePage">
 <section class="hero">
-  <div>
-    <h1>镜中世界</h1>
-    <p>摄影是现实的一面透镜，也是通往另一个世界的窗口。</p>
-    <div class="curator">策展人：张昊文</div>
-  </div>
+  <div><h1>镜中世界</h1><p>摄影是现实的一面透镜，也是通往另一个世界的窗口。</p><div class="curator">策展人：张昊文</div></div>
 </section>
-
-<section class="section" id="exhibitions">
-  <h2 class="section-title">展览</h2>
-  <div class="exhibition-grid" id="exhibitionGrid"></div>
-</section>
-
-<section class="section" id="columns">
-  <h2 class="section-title">文字专栏</h2>
-  <div id="columnList"></div>
-</section>
-
-<section class="section" id="curator">
-  <h2 class="section-title">策展人</h2>
-  <div id="curatorList"></div>
-</section>
-
+<section class="section" id="exhibitions"><h2 class="section-title">展览</h2><div class="exhibition-grid" id="exhibitionGrid"></div></section>
+<section class="section" id="columns"><h2 class="section-title">文字专栏</h2><div id="columnList"></div></section>
+<section class="section" id="curator"><h2 class="section-title">策展人</h2><div id="curatorList"></div></section>
 <footer class="footer">© 2026 镜中世界 · 线上画廊 &nbsp;|&nbsp; 策展人：张昊文</footer>
 </div>
 
-<!-- ===== 展览详情页 ===== -->
+<!-- 展览详情 -->
 <div class="detail-page" id="detailPage">
   <div class="detail-back"><a onclick="showHome()">← 返回首页</a></div>
   <div class="detail-header" id="detailHeader"></div>
   <div class="detail-works" id="detailWorks"></div>
 </div>
 
-<!-- ===== 后台管理页 ===== -->
+<!-- 后台 -->
 <div class="admin-page" id="adminPage">
   <div class="admin-container">
-    <div class="admin-sidebar">
-      <a class="active" onclick="switchAdmin('dashboard')">📊 总览</a>
-      <a onclick="switchAdmin('exhibitions')">📂 展览</a>
-      <a onclick="switchAdmin('columns')">📝 专栏</a>
-      <a onclick="switchAdmin('curators')">👤 策展人</a>
-      <a onclick="switchAdmin('upload')">🖼 上传</a>
-      <a onclick="switchAdmin('appearance')">🎨 外观</a>
-      <a onclick="switchAdmin('settings')">⚙ 设置</a>
-      <a onclick="logout()" style="color:#ff6b6b;margin-top:20px">退出登录</a>
-    </div>
+    <div class="admin-sidebar" id="adminSidebar"></div>
     <div class="admin-main" id="adminMain"></div>
   </div>
 </div>
 
-<!-- 大图灯箱 -->
+<!-- 灯箱 -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">&times;</button>
   <button class="lb-nav lb-prev" onclick="lbNav(-1)">&#10094;</button>
@@ -390,117 +317,93 @@ body::before{
 <div class="toast" id="toast"></div>
 
 <script>
-// ============ 常量与默认数据 ============
-const STORAGE_KEY = 'mirror_world_data';
-const ACCOUNT_KEY = 'mirror_world_account';
-const SESSION_KEY = 'mirror_admin_logged';
-const THEME_KEY = 'mirror_world_theme';
+// ============ 常量 ============
+const STORAGE_KEY='mirror_world_data',ACCOUNT_KEY='mirror_world_account',SESSION_KEY='mirror_admin_logged',THEME_KEY='mirror_world_theme',FONTS_KEY='custom_fonts';
 
-const defaultAccount = { username: '海屿', password: 'mse20221028' };
+const defaultAccount={username:'海屿',password:'mse20221028'};
 
-const defaultTheme = {
-  bgColor: '#0a1a10',
-  bgImage: '',
-  bgOverlay: 'rgba(0,0,0,0.6)',
-  textFont: "'Noto Sans SC','Inter',sans-serif",
-  titleFont: "'Noto Serif SC','Playfair Display',serif",
-  bodyFont: "'Noto Sans SC','Inter',sans-serif",
-  curatorFont: "'Cormorant Garamond','Noto Serif SC',serif",
-  boardColor: '#002fa7',
-  boardColors: ['#002fa7','#0d2818','#c9a84c','#1a1a1a','#2a0a0a','#0a1a2a','#1a0a2a']
+const defaultTheme={
+  bgColor:'#0a1a10',bgImage:'',bgOverlay:'rgba(0,0,0,0.6)',
+  titleFont:'Noto Serif SC',bodyFont:'Noto Sans SC',curatorFont:'Cormorant Garamond',
+  boardColor:'#002fa7',
+  boardColors:['#002fa7','#0d2818','#c9a84c','#1a1a1a','#2a0a0a','#0a1a2a','#1a0a2a','#3a2a0a','#0a3a2a','#2a1a3a']
 };
 
-const defaultData = {
-  exhibitions: [
-    {
-      id:'ex0', title:'2025夏天的颜色', tags:['摄影·年度特展'],
-      statement:'银盐的颗粒感与数字像素的冷冽在此交织。2025年的夏天，我们试图用镜头捕捉那些即将消逝的色彩——褪色的广告牌、夕照下的塑料花、地铁站里陌生人的瞳孔。摄影史告诉我们，每一次对色彩的记录，都是一次对时间的挽留。',
-      artworks:[
-        { id:'w0', title:'霓虹与夕照', desc:'城市黄昏时分，人造光与自然光的交界处，色彩呈现出最暧昧的灰度。', photos:[], boardColor:'#002fa7' },
-        { id:'w1', title:'塑料花的永恒', desc:'那些永不凋谢的花朵，是夏天最沉默的隐喻。', photos:[], boardColor:'#0d2818' }
-      ]
-    },
-    {
-      id:'ex1', title:'2026夏天的颜色', tags:['摄影·年度特展'],
-      statement:'当克莱因蓝遇见深绿，当胶片质感碰撞算法美学。2026年的夏天，色彩不再只是视觉经验，而成为了一种哲学追问。正如伊夫·克莱因所言："蓝色是没有维度的，它超越了维度。"',
-      artworks:[
-        { id:'w2', title:'克莱因蓝的研究', desc:'纯粹之蓝，是视觉的终极归宿。', photos:[], boardColor:'#002fa7' }
-      ]
-    },
-    {
-      id:'ex2', title:'快乐之家', tags:['纪实·长期项目'],
-      statement:'从维多利亚时代的家庭肖像到荒木经惟的私写真，家庭摄影始终在真实与表演之间摇摆。"快乐之家"试图在这个张力中寻找一条属于自己的道路——那些看似平凡的日常瞬间，或许才是摄影最动人的力量。',
-      artworks:[
-        { id:'w3', title:'厨房里的光', desc:'母亲在灶台前忙碌的侧影，是家最温暖的轮廓。', photos:[], boardColor:'#c9a84c' }
-      ]
-    },
-    {
-      id:'ex3', title:'风光与星空', tags:['风景摄影·自然纪实'],
-      statement:'从19世纪探险摄影师卡尔顿·沃特金斯穿越内华达山脉的玻璃底片，到安塞尔·亚当斯的月升时分，再到当代星空摄影师的银河长曝——人类对大地与星空的仰望从未改变。',
-      artworks:[
-        { id:'w4', title:'银河纪事', desc:'在海拔四千米的高原，星空不再是浪漫的修辞，而是物理的实在。', photos:[], boardColor:'#0a1a2a' },
-        { id:'w5', title:'山脊线', desc:'晨雾中的山脉轮廓，如同未显影的底片。', photos:[], boardColor:'#1a0a2a' }
-      ]
-    }
+const fontCatalog=[
+  {name:'Noto Serif SC',cat:'serif',loaded:true},
+  {name:'Playfair Display',cat:'serif',loaded:true},
+  {name:'Cormorant Garamond',cat:'serif',loaded:true},
+  {name:'Noto Sans SC',cat:'sans',loaded:true},
+  {name:'Inter',cat:'sans',loaded:true},
+];
+
+const defaultData={
+  exhibitions:[
+    {id:'ex0',title:'2025夏天的颜色',tags:['摄影·年度特展'],statement:'银盐的颗粒感与数字像素的冷冽在此交织。2025年的夏天，我们试图用镜头捕捉那些即将消逝的色彩——褪色的广告牌、夕照下的塑料花、地铁站里陌生人的瞳孔。摄影史告诉我们，每一次对色彩的记录，都是一次对时间的挽留。',artworks:[{id:'w0',title:'霓虹与夕照',desc:'城市黄昏时分，人造光与自然光的交界处，色彩呈现出最暧昧的灰度。',photos:[],boardColor:'#002fa7'},{id:'w1',title:'塑料花的永恒',desc:'那些永不凋谢的花朵，是夏天最沉默的隐喻。',photos:[],boardColor:'#0d2818'}]},
+    {id:'ex1',title:'2026夏天的颜色',tags:['摄影·年度特展'],statement:'当克莱因蓝遇见深绿，当胶片质感碰撞算法美学。2026年的夏天，色彩不再只是视觉经验，而成为了一种哲学追问。正如伊夫·克莱因所言："蓝色是没有维度的，它超越了维度。"',artworks:[{id:'w2',title:'克莱因蓝的研究',desc:'纯粹之蓝，是视觉的终极归宿。',photos:[],boardColor:'#002fa7'}]},
+    {id:'ex2',title:'快乐之家',tags:['纪实·长期项目'],statement:'从维多利亚时代的家庭肖像到荒木经惟的私写真，家庭摄影始终在真实与表演之间摇摆。"快乐之家"试图在这个张力中寻找一条属于自己的道路——那些看似平凡的日常瞬间，或许才是摄影最动人的力量。',artworks:[{id:'w3',title:'厨房里的光',desc:'母亲在灶台前忙碌的侧影，是家最温暖的轮廓。',photos:[],boardColor:'#c9a84c'}]},
+    {id:'ex3',title:'风光与星空',tags:['风景摄影·自然纪实'],statement:'从19世纪探险摄影师卡尔顿·沃特金斯穿越内华达山脉的玻璃底片，到安塞尔·亚当斯的月升时分，再到当代星空摄影师的银河长曝——人类对大地与星空的仰望从未改变。',artworks:[{id:'w4',title:'银河纪事',desc:'在海拔四千米的高原，星空不再是浪漫的修辞，而是物理的实在。',photos:[],boardColor:'#0a1a2a'},{id:'w5',title:'山脊线',desc:'晨雾中的山脉轮廓，如同未显影的底片。',photos:[],boardColor:'#1a0a2a'}]}
   ],
-  columns: [
-    { id:'c0', title:'镜面与凝视：摄影的本质追问', date:'2026-03-15', body:'摄影是什么？\n\n是现实的镜像，还是观看的权力？苏珊·桑塔格在《论摄影》中写道："收集照片就是收集世界。"每一张照片都是一次切割，将流动的时间凝固成永恒的碎片。\n\n当我们举起相机，我们既是在记录，也是在创造。镜头前的世界经过取景框的筛选，已经不再是原本的模样。这就是摄影最迷人的悖论——它既忠实于现实，又不可避免地扭曲现实。' },
-    { id:'c1', title:'夏天的视觉考古学', date:'2026-06-01', body:'夏天，或许是摄影最钟情的季节。\n\n强烈的光线制造出戏剧性的阴影，饱和的色彩在高温中几乎要融化。从威廉·埃格尔斯顿的美国南部夏日到川内伦子的微光世界，摄影家们一直在用镜头挖掘夏天深处的秘密。\n\n这个系列专栏将不定期更新，探讨摄影与时间、记忆、情感之间的微妙关系。' }
+  columns:[
+    {id:'c0',title:'镜面与凝视：摄影的本质追问',date:'2026-03-15',body:'摄影是什么？\n\n是现实的镜像，还是观看的权力？苏珊·桑塔格在《论摄影》中写道："收集照片就是收集世界。"每一张照片都是一次切割，将流动的时间凝固成永恒的碎片。\n\n当我们举起相机，我们既是在记录，也是在创造。镜头前的世界经过取景框的筛选，已经不再是原本的模样。这就是摄影最迷人的悖论——它既忠实于现实，又不可避免地扭曲现实。'},
+    {id:'c1',title:'夏天的视觉考古学',date:'2026-06-01',body:'夏天，或许是摄影最钟情的季节。\n\n强烈的光线制造出戏剧性的阴影，饱和的色彩在高温中几乎要融化。从威廉·埃格尔斯顿的美国南部夏日到川内伦子的微光世界，摄影家们一直在用镜头挖掘夏天深处的秘密。\n\n这个系列专栏将不定期更新，探讨摄影与时间、记忆、情感之间的微妙关系。'}
   ],
-  curators: [
-    { id:'cu0', name:'张昊文', role:'策展人 · 摄影研究者', bio:'张昊文，24级本科在读，人文、风光摄影师，摄影批评写作者。专注于当代摄影与视觉文化研究与光影艺术表达，关注图像如何塑造、表达情绪与故事内容。致力于在技术与人文的交汇处寻找摄影的新可能。\n\n联系方式：1964391340@qq.com', portrait:'' }
+  curators:[
+    {id:'cu0',name:'张昊文',role:'策展人 · 摄影研究者',bio:'张昊文，24级本科在读，人文、风光摄影师，摄影批评写作者。专注于当代摄影与视觉文化研究与光影艺术表达，关注图像如何塑造、表达情绪与故事内容。致力于在技术与人文的交汇处寻找摄影的新可能。\n\n联系方式：1964391340@qq.com',portrait:''}
   ]
 };
 
-// ============ 工具函数 ============
+// ============ 工具 ============
 function getData(){return JSON.parse(localStorage.getItem(STORAGE_KEY))||defaultData}
 function saveData(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 function getTheme(){return JSON.parse(localStorage.getItem(THEME_KEY))||defaultTheme}
 function saveTheme(t){localStorage.setItem(THEME_KEY,JSON.stringify(t))}
+function getCustomFonts(){return JSON.parse(localStorage.getItem(FONTS_KEY)||'[]')}
+function saveCustomFonts(arr){localStorage.setItem(FONTS_KEY,JSON.stringify(arr))}
 
-// 应用主题到 CSS 变量
 function applyTheme(){
   const t=getTheme();
   const root=document.documentElement;
   root.style.setProperty('--bg-color',t.bgColor||defaultTheme.bgColor);
   root.style.setProperty('--bg-image',t.bgImage?`url(${t.bgImage})`:'none');
   root.style.setProperty('--bg-overlay',t.bgOverlay||defaultTheme.bgOverlay);
-  root.style.setProperty('--text-font',t.textFont||defaultTheme.textFont);
-  root.style.setProperty('--title-font',t.titleFont||defaultTheme.titleFont);
-  root.style.setProperty('--body-font',t.bodyFont||defaultTheme.bodyFont);
-  root.style.setProperty('--curator-font',t.curatorFont||defaultTheme.curatorFont);
+  root.style.setProperty('--title-font',`'${t.titleFont||defaultTheme.titleFont}'`);
+  root.style.setProperty('--body-font',`'${t.bodyFont||defaultTheme.bodyFont}'`);
+  root.style.setProperty('--curator-font',`'${t.curatorFont||defaultTheme.curatorFont}'`);
   root.style.setProperty('--board-color',t.boardColor||defaultTheme.boardColor);
 }
 
-// ============ 远程数据加载 ============
+// 注入自定义字体
+function injectCustomFonts(){
+  getCustomFonts().forEach(f=>{
+    const ff=f.name.replace(/\.[^.]+$/,'');
+    if(document.getElementById('cf-'+ff)) return;
+    const s=document.createElement('style');
+    s.id='cf-'+ff;
+    // 优先 ttf/otf 用 truetype，woff2 用 woff2，woff 用 woff
+    const fmtMap={ttf:'truetype',otf:'truetype',woff2:'woff2',woff:'woff'};
+    const fmt=f.format||'truetype';
+    s.textContent=`@font-face{font-family:'${ff}';src:url(${f.data}) format('${fmt}');font-display:swap}`;
+    document.head.appendChild(s);
+  });
+}
+
+// ============ 远程加载 ============
 async function loadRemoteData(){
-  try{
-    const resp=await fetch('./data.json?_='+Date.now());
-    if(!resp.ok) throw 0;
-    const d=await resp.json();
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(d));
-    console.log('✅ 远程数据已加载');
-    return true;
-  }catch(e){console.log('ℹ️ 使用本地数据');return false}
+  try{const r=await fetch('./data.json?_='+Date.now());if(!r.ok) throw 0;saveData(await r.json());console.log('✅ data.json loaded')}catch(e){}
 }
 async function loadRemoteTheme(){
-  try{
-    const resp=await fetch('./theme.json?_='+Date.now());
-    if(!resp.ok) throw 0;
-    const t=await resp.json();
-    localStorage.setItem(THEME_KEY,JSON.stringify(t));
-    console.log('✅ 远程主题已加载');
-  }catch(e){}
+  try{const r=await fetch('./theme.json?_='+Date.now());if(!r.ok) throw 0;saveTheme(await r.json());console.log('✅ theme.json loaded')}catch(e){}
 }
 
 // ============ 初始化 ============
 if(!localStorage.getItem(ACCOUNT_KEY)) localStorage.setItem(ACCOUNT_KEY,JSON.stringify(defaultAccount));
-
 (async()=>{
   await loadRemoteData();
   await loadRemoteTheme();
   if(!localStorage.getItem(STORAGE_KEY)) saveData(defaultData);
   if(!localStorage.getItem(THEME_KEY)) saveTheme(defaultTheme);
+  injectCustomFonts();
   applyTheme();
   renderHome();
 })();
@@ -508,476 +411,537 @@ if(!localStorage.getItem(ACCOUNT_KEY)) localStorage.setItem(ACCOUNT_KEY,JSON.str
 // ============ 首页渲染 ============
 function renderHome(){
   const data=getData();
-  const theme=getTheme();
-
-  // 展览
   document.getElementById('exhibitionGrid').innerHTML=data.exhibitions.map(ex=>{
-    const totalPhotos=ex.artworks.reduce((s,w)=>s+w.photos.length,0);
+    const tp=ex.artworks.reduce((s,w)=>s+w.photos.length,0);
     return `<div class="exhibition-card" onclick="showDetail('${ex.id}')">
       <div class="tags">${ex.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-      <h3>${ex.title}</h3>
-      <p>${ex.statement.slice(0,100)}${ex.statement.length>100?'...':''}</p>
-      <div style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:10px">${ex.artworks.length} 组作品 · ${totalPhotos} 张照片</div>
-      <div class="enter-hint">点击进入展览 →</div>
-    </div>`;
+      <h3>${ex.title}</h3><p>${ex.statement.slice(0,100)}${ex.statement.length>100?'...':''}</p>
+      <div style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:10px">${ex.artworks.length} 组作品 · ${tp} 张照片</div>
+      <div class="enter-hint">点击进入展览 →</div></div>`;
   }).join('');
-
-  // 专栏
-  document.getElementById('columnList').innerHTML=data.columns.map(c=>`
-    <div class="column-article">
-      <h3>${c.title}</h3>
-      <div class="date">${c.date}</div>
-      <div class="body">${c.body.slice(0,200)}${c.body.length>200?'...':''}</div>
-    </div>`).join('')||'<div class="admin-empty">暂无专栏</div>';
-
-  // 策展人（支持多个）
-  const curators=data.curators||[{name:data.curator?.name,role:data.curator?.role,bio:data.curator?.bio,portrait:data.curator?.portrait||''}];
-  document.getElementById('curatorList').innerHTML=curators.length?`<div class="curator-grid">${curators.map(c=>`
-    <div class="curator-card-item">
-      ${c.portrait?`<img class="portrait" src="${c.portrait}" alt="${c.name}">`:`<div class="portrait" style="display:flex;align-items:center;justify-content:center;font-size:32px;color:rgba(255,255,255,0.15)">📷</div>`}
-      <div class="info">
-        <h4>${c.name}</h4>
-        <div class="role">${c.role}</div>
-        <div class="bio">${c.bio}</div>
-      </div>
-    </div>`).join('')}</div>`:'<div class="admin-empty">暂无策展人信息</div>';
+  document.getElementById('columnList').innerHTML=data.columns.map(c=>`<div class="column-article"><h3>${c.title}</h3><div class="date">${c.date}</div><div class="body">${c.body.slice(0,200)}${c.body.length>200?'...':''}</div></div>`).join('')||'<div class="admin-empty">暂无专栏</div>';
+  const curators=data.curators||[];
+  if(curators.length){
+    document.getElementById('curatorList').innerHTML=`<div class="curator-section">${curators.map((c,ci)=>`
+      <div class="curator-block">
+        <div class="curator-index">— ${String(ci+1).padStart(2,'0')} / ${String(curators.length).padStart(2,'0')} —</div>
+        <div class="curator-portrait-wrap">
+          ${c.portrait?`<img class="curator-portrait" src="${c.portrait}" alt="${c.name}">`:`<div class="curator-portrait-placeholder"><div class="placeholder-icon">📷</div><div class="placeholder-text">写真照片</div></div>`}
+        </div>
+        <div class="curator-info-wrap">
+          <div class="curator-name">${c.name}</div>
+          <div class="curator-role-text">${c.role}</div>
+          <div class="curator-bio-text">${c.bio.replace(/联系方式[：:]\s*[\w@.]+/g,'').trim()}</div>
+          ${c.bio.match(/联系方式[：:]\s*[\w@.]+/)?`<div class="curator-contact">${c.bio.match(/联系方式[：:]\s*[\w@.]+/)[0]}</div>`:''}
+        </div>
+      </div>`).join('')}</div>`;
+  }else{
+    document.getElementById('curatorList').innerHTML='<div class="admin-empty">暂无策展人</div>';
+  }
 }
 
 // ============ 页面切换 ============
-function showHome(){
-  document.getElementById('homePage').style.display='block';
-  document.getElementById('detailPage').style.display='none';
-  document.getElementById('adminPage').style.display='none';
-}
-
+function showHome(){document.getElementById('homePage').style.display='block';document.getElementById('detailPage').style.display='none';document.getElementById('adminPage').style.display='none'}
 function showDetail(id){
-  const data=getData();
-  const ex=data.exhibitions.find(e=>e.id===id);
+  const data=getData();const ex=data.exhibitions.find(e=>e.id===id);
   if(!ex) return toast('展览不存在');
-  document.getElementById('homePage').style.display='none';
-  document.getElementById('adminPage').style.display='none';
-  document.getElementById('detailPage').style.display='block';
+  document.getElementById('homePage').style.display='none';document.getElementById('adminPage').style.display='none';document.getElementById('detailPage').style.display='block';
   document.getElementById('detailHeader').innerHTML=`<h1>${ex.title}</h1><div class="statement">${ex.statement.replace(/\n/g,'<br>')}</div>`;
-
   if(!ex.artworks.length){document.getElementById('detailWorks').innerHTML='<div class="admin-empty">暂无作品</div>';return}
-
   document.getElementById('detailWorks').innerHTML=ex.artworks.map(wg=>{
-    const photosHtml=wg.photos.length?wg.photos.map((p,pi)=>`
-      <div class="photo-board" style="--board-color:${wg.boardColor||getTheme().boardColor}">
-        <div class="board-color-bar"></div>
-        <img src="${p.image}" alt="${p.caption||''}" loading="lazy" onclick="openLightbox('${ex.id}','${wg.id}',${pi})">
-        <div class="photo-caption">${p.caption||(pi+1+' / '+wg.photos.length)}</div>
-      </div>`).join(''):'<div class="admin-empty" style="padding:20px 0">该组照暂无图片</div>';
-    return `<div class="work-group">
-      <h3 class="work-group-title">${wg.title}</h3>
-      <span class="work-group-count">${wg.photos.length} 张</span>
-      <div class="work-group-desc">${wg.desc||''}</div>
-      <div class="photo-grid">${photosHtml}</div>
-    </div>`;
+    const ph=wg.photos.length?wg.photos.map((p,pi)=>`<div class="photo-board" style="--board-color:${wg.boardColor||getTheme().boardColor}"><div class="board-color-bar"></div><img src="${p.image}" alt="${p.caption||''}" loading="lazy" onclick="openLightbox('${ex.id}','${wg.id}',${pi})"><div class="photo-caption">${p.caption||(pi+1+'/'+wg.photos.length)}</div></div>`).join(''):'<div class="admin-empty" style="padding:20px 0">该组照暂无图片</div>';
+    return `<div class="work-group"><h3 class="work-group-title">${wg.title}</h3><span class="work-group-count">${wg.photos.length} 张</span><div class="work-group-desc">${wg.desc||''}</div><div class="photo-grid">${ph}</div></div>`;
   }).join('');
 }
 
 // ============ 灯箱 ============
-let lbState={exId:null,wgId:null,idx:0,photos:[]};
-function openLightbox(exId,wgId,idx){
-  const data=getData();
-  const ex=data.exhibitions.find(e=>e.id===exId);
-  const wg=ex.artworks.find(w=>w.id===wgId);
-  if(!wg||!wg.photos.length) return;
-  lbState={exId,wgId,idx,photos:wg.photos};
-  document.getElementById('lightbox').classList.add('active');
-  renderLightbox();
-}
-function renderLightbox(){
-  const p=lbState.photos[lbState.idx];
-  if(!p) return;
-  document.getElementById('lbImg').src=p.image;
-  document.getElementById('lbInfo').textContent=`${lbState.idx+1} / ${lbState.photos.length}${p.caption?' · '+p.caption:''}`;
-}
-function lbNav(d){lbState.idx=(lbState.idx+d+lbState.photos.length)%lbState.photos.length;renderLightbox()}
+let lbS={exId:null,wgId:null,idx:0,photos:[]};
+function openLightbox(eid,wid,idx){const d=getData();const ex=d.exhibitions.find(e=>e.id===eid);const wg=ex.artworks.find(w=>w.id===wid);if(!wg||!wg.photos.length)return;lbS={exId:eid,wgId:wid,idx,photos:wg.photos};document.getElementById('lightbox').classList.add('active');renderLB()}
+function renderLB(){const p=lbS.photos[lbS.idx];if(!p)return;document.getElementById('lbImg').src=p.image;document.getElementById('lbInfo').textContent=`${lbS.idx+1}/${lbS.photos.length}${p.caption?' · '+p.caption:''}`}
+function lbNav(d){lbS.idx=(lbS.idx+d+lbS.photos.length)%lbS.photos.length;renderLB()}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('active')}
-
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){closeLightbox();document.getElementById('loginOverlay').style.display='none'}
-  if(document.getElementById('lightbox').classList.contains('active')){
-    if(e.key==='ArrowLeft') lbNav(-1);
-    if(e.key==='ArrowRight') lbNav(1);
-  }
+  if(document.getElementById('lightbox').classList.contains('active')){if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1)}
 });
 
 // ============ 登录 ============
 function openLogin(){document.getElementById('loginOverlay').style.display='flex';document.getElementById('loginError').textContent=''}
-function handleLogin(){
-  const u=document.getElementById('loginUser').value.trim();
-  const p=document.getElementById('loginPass').value.trim();
-  const acc=JSON.parse(localStorage.getItem(ACCOUNT_KEY));
-  if(u===acc.username&&p===acc.password){sessionStorage.setItem(SESSION_KEY,'true');document.getElementById('loginOverlay').style.display='none';enterAdmin()}
-  else{document.getElementById('loginError').textContent='账号或密码错误'}
-}
-function enterAdmin(){
-  if(!sessionStorage.getItem(SESSION_KEY)){openLogin();return}
-  document.getElementById('homePage').style.display='none';
-  document.getElementById('detailPage').style.display='none';
-  document.getElementById('adminPage').style.display='block';
-  switchAdmin('dashboard');
-}
+function handleLogin(){const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim(),acc=JSON.parse(localStorage.getItem(ACCOUNT_KEY));if(u===acc.username&&p===acc.password){sessionStorage.setItem(SESSION_KEY,'true');document.getElementById('loginOverlay').style.display='none';enterAdmin()}else{document.getElementById('loginError').textContent='账号或密码错误'}}
+function enterAdmin(){if(!sessionStorage.getItem(SESSION_KEY)){openLogin();return}document.getElementById('homePage').style.display='none';document.getElementById('detailPage').style.display='none';document.getElementById('adminPage').style.display='block';switchAdmin('dashboard')}
 function logout(){sessionStorage.removeItem(SESSION_KEY);showHome()}
 
 // ============ 后台路由 ============
+// 外观子页面状态
+let apprSub='bg'; // bg | board | title | body | curator
+
 function switchAdmin(tab){
-  document.querySelectorAll('.admin-sidebar a').forEach(a=>a.classList.remove('active'));
-  document.querySelector(`.admin-sidebar a[onclick*="${tab}"]`).classList.add('active');
+  // 渲染侧边栏
+  const sidebar=document.getElementById('adminSidebar');
+  const tabs=[
+    {id:'dashboard',label:'📊 总览',group:''},
+    {id:'exhibitions',label:'📂 展览',group:''},
+    {id:'columns',label:'📝 专栏',group:''},
+    {id:'curators',label:'👤 策展人',group:''},
+    {id:'upload',label:'🖼 上传',group:''},
+    {id:'appearance',label:'🎨 外观',group:'外观设置'},
+    {id:'appr-bg',label:'  背景颜色/图片',group:'外观设置'},
+    {id:'appr-board',label:'  背景板颜色',group:'外观设置'},
+    {id:'appr-title',label:'  标题字体',group:'外观设置'},
+    {id:'appr-body',label:'  正文字体',group:'外观设置'},
+    {id:'appr-curator',label:'  策展人字体',group:'外观设置'},
+    {id:'appr-custom',label:'  自定义字体',group:'外观设置'},
+    {id:'settings',label:'⚙ 设置',group:''},
+  ];
+  let shtml='';let cur='';
+  tabs.forEach(t=>{
+    if(t.group&&t.group!==cur){shtml+=`<div class="sidebar-group">${t.group}</div>`;cur=t.group}
+    else if(!t.group&&cur){cur=''}
+    const isActive=currentAdminTab()===t.id;
+    shtml+=`<a ${isActive?'class="active"':''} onclick="switchAdmin('${t.id}')">${t.label}</a>`;
+  });
+  sidebar.innerHTML=shtml;
+
   const main=document.getElementById('adminMain');
   const data=getData();
   const theme=getTheme();
 
-  // ---- 总览 ----
-  if(tab==='dashboard'){
-    const totalGroups=data.exhibitions.reduce((s,e)=>s+e.artworks.length,0);
-    const totalPhotos=data.exhibitions.reduce((s,e)=>s+e.artworks.reduce((a,w)=>a+w.photos.length,0),0);
-    const curatorCount=(data.curators||[]).length;
-    let size=0;try{size=new Blob([localStorage.getItem(STORAGE_KEY)]).size}catch(e){}
-    main.innerHTML=`<h2>📊 总览</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:20px">
-        <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center"><div style="font-size:34px;color:#fff">${data.exhibitions.length}</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px">展览</div></div>
-        <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center"><div style="font-size:34px;color:#fff">${totalGroups}</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px">组照</div></div>
-        <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center"><div style="font-size:34px;color:#fff">${totalPhotos}</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px">照片</div></div>
-        <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center"><div style="font-size:34px;color:#fff">${curatorCount}</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px">策展人</div></div>
-        <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center"><div style="font-size:34px;color:#fff">${(size/1024).toFixed(1)}KB</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px">存储</div></div>
-      </div>`;
-  }
+  // 路由分发
+  if(tab==='dashboard') renderDashboard(main,data);
+  else if(tab==='exhibitions') renderExhibitions(main,data);
+  else if(tab==='columns') renderColumns(main,data);
+  else if(tab==='curators') renderCurators(main,data);
+  else if(tab==='upload') renderUpload(main,data,theme);
+  else if(tab==='appearance') renderAppearanceHome(main,theme);
+  else if(tab==='appr-bg') renderApprBg(main,theme);
+  else if(tab==='appr-board') renderApprBoard(main,theme,data);
+  else if(tab==='appr-title') renderApprFont(main,'title','标题字体','hero标题 / 展览标题 / 章节标题');
+  else if(tab==='appr-body') renderApprFont(main,'body','正文字体','专栏正文 / 策展陈述 / 说明文字');
+  else if(tab==='appr-curator') renderApprFont(main,'curator','策展人字体','策展人姓名 / 头衔 / 签名');
+  else if(tab==='appr-custom') renderApprCustom(main);
+  else if(tab==='settings') renderSettings(main);
+}
 
-  // ---- 展览管理 ----
-  else if(tab==='exhibitions'){
-    let html=`<h2>📂 展览管理</h2>
-      <div class="admin-form">
-        <label>新增展览</label>
-        <input type="text" id="newExTitle" placeholder="展览名称">
-        <input type="text" id="newExTags" placeholder="标签（逗号分隔）">
-        <textarea id="newExStmt" placeholder="策展陈述"></textarea>
-        <button class="btn" onclick="addExhibition()">➕ 添加展览</button>
+function currentAdminTab(){
+  // 从 URL hash 或闭包读取
+  return window._curTab||'dashboard';
+}
+// 重写 switchAdmin 保存当前 tab
+const _origSwitch=switchAdmin;
+window.switchAdmin=function(tab){
+  window._curTab=tab;
+  // 同步外观子页面状态
+  if(tab==='appr-bg') apprSub='bg';
+  if(tab==='appr-board') apprSub='board';
+  _origSwitch(tab);
+};
+
+// ============ 各子页面渲染 ============
+function renderDashboard(main,data){
+  const tg=data.exhibitions.reduce((s,e)=>s+e.artworks.reduce((a,w)=>a+w.photos.length,0),0);
+  const cc=(data.curators||[]).length;
+  let sz=0;try{sz=new Blob([localStorage.getItem(STORAGE_KEY)]).size}catch(e){}
+  main.innerHTML=`<h2>📊 总览</h2><p class="subtitle">网站数据一览</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px">
+  ${[['展览',data.exhibitions.length],['组照',data.exhibitions.reduce((s,e)=>s+e.artworks.length,0)],['照片',tg],['策展人',cc],['存储',(sz/1024).toFixed(1)+'KB']].map(([l,v])=>`<div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center"><div style="font-size:34px;color:#fff">${v}</div><div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px">${l}</div></div>`).join('')}
+  </div>`;
+}
+
+function renderExhibitions(main,data){
+  let html=`<h2>📂 展览管理</h2><p class="subtitle">新增、编辑、删除展览与组照</p>
+  <div class="sub-panel"><h3>➕ 新增展览</h3>
+  <div class="admin-form"><input type="text" id="newExTitle" placeholder="展览名称"><input type="text" id="newExTags" placeholder="标签（逗号分隔）"><textarea id="newExStmt" placeholder="策展陈述"></textarea><button class="btn" onclick="addExhibition()">添加展览</button></div></div>
+  <h3 style="color:#fff;font-size:16px;margin:24px 0 12px">现有展览</h3>`;
+  data.exhibitions.forEach(ex=>{
+    html+=`<div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px 20px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><strong style="color:#fff;font-family:var(--title-font)">${ex.title}</strong><div><button class="btn-small" onclick="addWorkGroup('${ex.id}')">➕ 组照</button><button class="btn-danger" onclick="delExhibition('${ex.id}')">删除</button></div></div>`;
+    ex.artworks.forEach(wg=>{html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid rgba(255,255,255,0.04)"><span style="color:rgba(255,255,255,0.5);font-size:13px">📷 ${wg.title} <span style="color:rgba(255,255,255,0.25)">(${wg.photos.length}张)</span></span><div><button class="btn-small" onclick="editWorkGroup('${ex.id}','${wg.id}')">编辑</button><button class="btn-small" onclick="editBoardColor('${ex.id}','${wg.id}')">🎨背景板</button><button class="btn-danger" onclick="delWorkGroup('${ex.id}','${wg.id}')">删除</button></div></div>`});
+    html+=`</div>`;
+  });
+  main.innerHTML=html;
+}
+
+function renderColumns(main,data){
+  let html=`<h2>📝 专栏管理</h2><p class="subtitle">文字专栏的增删改</p>
+  <div class="sub-panel"><h3>➕ 新增文章</h3><div class="admin-form"><input type="text" id="newColTitle" placeholder="文章标题"><input type="date" id="newColDate"><textarea id="newColBody" style="min-height:160px" placeholder="正文"></textarea><button class="btn" onclick="addColumn()">添加</button></div></div>
+  <h3 style="color:#fff;font-size:16px;margin:20px 0 12px">现有文章</h3>`;
+  data.columns.forEach(c=>{html+=`<div class="admin-list-item"><span>${c.title}</span><button class="btn-danger" onclick="delColumn('${c.id}')">删除</button></div>`});
+  main.innerHTML=html;
+}
+
+function renderCurators(main,data){
+  const curators=data.curators||[];
+  let html=`<h2>👤 策展人管理</h2><p class="subtitle">支持多位策展人 · 可上传写真 · 每位策展人独占一个编辑面板</p>
+
+  <div class="sub-panel" style="background:rgba(0,47,167,0.06);border-color:rgba(0,47,167,0.2)">
+    <h3>➕ 新增策展人</h3>
+    <p class="hint">填写基本信息并上传写真照片</p>
+    <div class="admin-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div><label>姓名</label><input type="text" id="newCuName" placeholder="如：张昊文"></div>
+        <div><label>头衔</label><input type="text" id="newCuRole" placeholder="如：策展人 · 摄影研究者"></div>
       </div>
-      <hr style="border-color:rgba(255,255,255,0.06);margin:24px 0;">
-      <h3 style="color:#fff;font-size:16px;margin-bottom:12px">现有展览 & 组照</h3>`;
-    data.exhibitions.forEach(ex=>{
-      html+=`<div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px 20px;margin-bottom:14px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <strong style="color:#fff;font-size:16px;font-family:var(--title-font)">${ex.title}</strong>
-          <div>
-            <button class="btn-small" onclick="addWorkGroup('${ex.id}')">➕ 组照</button>
-            <button class="btn-danger" onclick="delExhibition('${ex.id}')">删除</button>
-          </div>
-        </div>`;
-      ex.artworks.forEach(wg=>{
-        html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,0.04)">
-          <span style="color:rgba(255,255,255,0.5);font-size:13px">📷 ${wg.title} <span style="color:rgba(255,255,255,0.25)">(${wg.photos.length}张)</span></span>
-          <div>
-            <button class="btn-small" onclick="editWorkGroup('${ex.id}','${wg.id}')">编辑</button>
-            <button class="btn-small" onclick="editBoardColor('${ex.id}','${wg.id}')">🎨背景板</button>
-            <button class="btn-danger" onclick="delWorkGroup('${ex.id}','${wg.id}')">删除</button>
-          </div>
-        </div>`;
-      });
-      html+=`</div>`;
-    });
-    main.innerHTML=html;
-  }
-
-  // ---- 专栏管理 ----
-  else if(tab==='columns'){
-    let html=`<h2>📝 专栏管理</h2>
-      <div class="admin-form">
-        <label>新增文章</label>
-        <input type="text" id="newColTitle" placeholder="文章标题">
-        <input type="date" id="newColDate">
-        <textarea id="newColBody" style="min-height:160px" placeholder="正文"></textarea>
-        <button class="btn" onclick="addColumn()">➕ 添加</button>
+      <label style="margin-top:16px">简介 / 履历</label>
+      <textarea id="newCuBio" placeholder="详细履历、研究方向、联系方式等" style="min-height:120px"></textarea>
+      <label style="margin-top:14px">写真照片（≤5MB）</label>
+      <div class="upload-zone" onclick="document.getElementById('newCuPortrait').click()" style="padding:20px">
+        <p><strong>📷 点击选择写真照片</strong></p>
+        <p style="font-size:12px">自动压缩为 800px 宽，圆形展示</p>
+        <input type="file" id="newCuPortrait" accept="image/*" style="display:none" onchange="previewNewPortrait(event)">
       </div>
-      <hr style="border-color:rgba(255,255,255,0.06);margin:24px 0;">
-      <h3 style="color:#fff;font-size:16px;margin-bottom:12px">现有文章</h3>`;
-    data.columns.forEach(c=>{html+=`<div class="admin-list-item"><span>${c.title}</span><div><button class="btn-danger" onclick="delColumn('${c.id}')">删除</button></div></div>`});
-    main.innerHTML=html;
-  }
+      <div id="newPortraitPreview" style="margin-top:12px"></div>
+      <button class="btn" style="margin-top:18px" onclick="addCurator()">✨ 添加策展人</button>
+    </div>
+  </div>
 
-  // ---- 策展人管理（多策展人 + 写真上传）----
-  else if(tab==='curators'){
-    const curators=data.curators||[];
-    let html=`<h2>👤 策展人管理</h2>
-      <div class="admin-form">
-        <label>新增策展人</label>
-        <input type="text" id="newCuName" placeholder="姓名">
-        <input type="text" id="newCuRole" placeholder="头衔（如：策展人·摄影研究者）">
-        <textarea id="newCuBio" placeholder="个人简介/履历"></textarea>
-        <label>写真照片</label>
-        <input type="file" id="newCuPortrait" accept="image/*">
-        <button class="btn" onclick="addCurator()">➕ 添加策展人</button>
+  <h3 style="color:#fff;font-size:18px;margin:32px 0 16px;font-family:var(--title-font);letter-spacing:2px">现有策展人（${curators.length} 位）</h3>`;
+
+  curators.forEach((c,i)=>{
+    html+=`
+    <div class="sub-panel" style="margin-bottom:24px;padding:32px">
+      <div style="display:flex;gap:28px;align-items:flex-start">
+        <!-- 左侧：写真 -->
+        <div style="flex:0 0 180px;text-align:center">
+          ${c.portrait?`<img src="${c.portrait}" style="width:160px;height:200px;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5),0 0 40px rgba(0,47,167,0.1);border:2px solid rgba(255,255,255,0.08)">`:`<div style="width:160px;height:200px;border-radius:12px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;color:rgba(255,255,255,0.1);border:2px dashed rgba(255,255,255,0.1)">📷</div>`}
+          <div style="margin-top:12px">
+            <label style="color:rgba(255,255,255,0.35);font-size:12px;margin:0 0 6px;display:block">更换写真</label>
+            <input type="file" id="cuPortrait${i}" accept="image/*" style="font-size:12px;width:100%" onchange="previewPortraitChange(${i})">
+          </div>
+          <div id="portraitPreview${i}" style="margin-top:8px"></div>
+        </div>
+        <!-- 右侧：信息编辑 -->
+        <div style="flex:1">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div><label style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:3px;display:block">姓名</label><input type="text" value="${c.name}" id="cuName${i}" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:15px"></div>
+            <div><label style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:3px;display:block">头衔</label><input type="text" value="${c.role}" id="cuRole${i}" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:15px"></div>
+          </div>
+          <div><label style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:3px;display:block">简介 / 履历</label>
+          <textarea id="cuBio${i}" style="width:100%;padding:10px 14px;min-height:120px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;line-height:1.7;resize:vertical">${c.bio}</textarea></div>
+          <div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)">
+            <button class="btn" onclick="saveCurator(${i})">💾 保存修改</button>
+            <button class="btn-danger" onclick="delCurator(${i})">🗑 删除策展人</button>
+          </div>
+        </div>
       </div>
-      <hr style="border-color:rgba(255,255,255,0.06);margin:24px 0;">
-      <h3 style="color:#fff;font-size:16px;margin-bottom:12px">现有策展人</h3>`;
-    curators.forEach((c,i)=>{
-      html+=`<div class="curator-admin-card">
-        ${c.portrait?`<img src="${c.portrait}" alt="">`:`<div style="width:80px;height:80px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,0.15)">📷</div>`}
-        <div class="fields" style="flex:1">
-          <input type="text" value="${c.name}" id="cuName${i}" placeholder="姓名">
-          <input type="text" value="${c.role}" id="cuRole${i}" placeholder="头衔">
-          <textarea id="cuBio${i}" placeholder="简介">${c.bio}</textarea>
-          <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
-            <label style="color:rgba(255,255,255,0.4);font-size:12px;margin:0">更换写真：</label>
-            <input type="file" id="cuPortrait${i}" accept="image/*" style="width:auto;font-size:12px">
-          </div>
-          <div style="margin-top:10px">
-            <button class="btn-small" onclick="saveCurator(${i})">💾 保存</button>
-            <button class="btn-danger" onclick="delCurator(${i})">删除</button>
-          </div>
-        </div>
-      </div>`;
-    });
-    main.innerHTML=html;
-  }
-
-  // ---- 上传作品 ----
-  else if(tab==='upload'){
-    let html=`<h2>🖼 上传作品（组照）</h2>
-      <div class="admin-form">
-        <label>选择展览</label>
-        <select id="uploadEx" onchange="onUploadExChange()"><option value="">-- 选择展览 --</option>${data.exhibitions.map(ex=>`<option value="${ex.id}">${ex.title}</option>`).join('')}</select>
-        <label>选择/新建组照</label>
-        <select id="uploadWg"><option value="">-- 先选展览 --</option></select>
-        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('uploadFiles').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
-          <div class="upload-icon">📥</div>
-          <p><strong>点击或拖拽图片到此区域</strong></p>
-          <p style="font-size:12px">支持多张同时上传 · 单张最大 20MB · 自动压缩</p>
-          <input type="file" id="uploadFiles" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
-        </div>
-        <div class="upload-progress" id="uploadProgress"><div class="bar" id="uploadBar"></div></div>
-        <div class="preview-list" id="previewList"></div>
-        <label style="margin-top:16px">组照标题</label>
-        <input type="text" id="uploadWgTitle" placeholder="例如：霓虹与夕照">
-        <label>组照介绍词</label>
-        <textarea id="uploadWgDesc" placeholder="这组作品的策展说明"></textarea>
-        <label>背景板颜色</label>
-        <div class="color-row">
-          <input type="color" class="color-input" id="uploadBoardColor" value="${theme.boardColor}">
-          <span style="color:rgba(255,255,255,0.35);font-size:12px" id="uploadBoardColorVal">${theme.boardColor}</span>
-        </div>
-        <button class="btn" onclick="doUploadGroup()">⬆ 上传并保存组照</button>
-      </div>`;
-    main.innerHTML=html;
-    window._pendingPhotos=[];
-    document.getElementById('uploadBoardColor').addEventListener('input',function(){document.getElementById('uploadBoardColorVal').textContent=this.value});
-  }
-
-  // ---- 🎨 外观设置（核心新功能）----
-  else if(tab==='appearance'){
-    const t=getTheme();
-    const fontOptions=`${['Noto Sans SC','Noto Serif SC','Inter','Playfair Display','Cormorant Garamond'].map(f=>`<option ${t.bodyFont.includes(f)?'selected':''}>${f}</option>`).join('')}`;
-    const presets=(t.boardColors||defaultTheme.boardColors).map(c=>`<div class="color-preset" style="background:${c}" onclick="setThemeColor('boardColor','${c}')" title="${c}"></div>`).join('');
-
-    main.innerHTML=`<h2>🎨 外观设置</h2>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px">
-
-        <!-- 左列：背景与颜色 -->
-        <div style="background:rgba(255,255,255,0.03);border-radius:16px;padding:28px">
-          <h3 style="color:#fff;font-size:18px;margin-bottom:16px;font-family:var(--title-font)">🖼 背景设置</h3>
-
-          <label style="color:rgba(255,255,255,0.5);font-size:13px;display:block;margin-bottom:6px">背景颜色</label>
-          <div class="color-row">
-            <input type="color" class="color-input" id="bgColorInput" value="${t.bgColor}" oninput="document.getElementById('bgColorVal').textContent=this.value">
-            <span style="color:rgba(255,255,255,0.35);font-size:12px" id="bgColorVal">${t.bgColor}</span>
-          </div>
-
-          <label style="color:rgba(255,255,255,0.5);font-size:13px;display:block;margin:14px 0 6px">背景图片</label>
-          <div class="upload-zone" style="padding:20px" onclick="document.getElementById('bgImgInput').click()" ondragover="event.preventDefault()" ondrop="handleBgImgDrop(event)">
-            <p style="font-size:13px">${t.bgImage?'✅ 已设置背景图（点击更换）':'点击或拖拽图片到此'}</p>
-            <input type="file" id="bgImgInput" accept="image/*" style="display:none" onchange="handleBgImgSelect(event)">
-          </div>
-
-          <label style="color:rgba(255,255,255,0.5);font-size:13px;display:block;margin:14px 0 6px">暗化遮罩（让文字更清晰）</label>
-          <input type="range" id="bgOverlayRange" min="0" max="90" value="${parseInt((t.bgOverlay.match(/\\d+\\.?\\d*/)||[60])[0])}" oninput="updateOverlay(this.value)" style="width:100%">
-          <span style="color:rgba(255,255,255,0.3);font-size:12px" id="bgOverlayVal">${t.bgOverlay}</span>
-
-          <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0">
-          <h3 style="color:#fff;font-size:18px;margin-bottom:12px;font-family:var(--title-font)">🎨 背景板颜色</h3>
-          <p style="color:rgba(255,255,255,0.35);font-size:12px;margin-bottom:10px">每张照片后面的展板颜色</p>
-          <div class="color-row">
-            <input type="color" class="color-input" id="boardColorInput" value="${t.boardColor}" oninput="document.getElementById('boardColorVal').textContent=this.value">
-            <span style="color:rgba(255,255,255,0.35);font-size:12px" id="boardColorVal">${t.boardColor}</span>
-          </div>
-          <p style="color:rgba(255,255,255,0.35);font-size:12px;margin:10px 0 6px">预设色板：</p>
-          <div class="color-presets">${presets}</div>
-          <button class="btn" style="margin-top:14px" onclick="saveAppearance()">💾 保存外观设置</button>
-        </div>
-
-        <!-- 右列：字体 -->
-        <div style="background:rgba(255,255,255,0.03);border-radius:16px;padding:28px">
-          <h3 style="color:#fff;font-size:18px;margin-bottom:16px;font-family:var(--title-font)">🔤 字体设置</h3>
-
-          <label style="color:rgba(255,255,255,0.5);font-size:13px;display:block;margin-bottom:6px">标题字体</label>
-          <select class="font-row-select" id="fontTitle" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none">
-            ${(()=>{const fonts=['Noto Serif SC','Playfair Display','Cormorant Garamond','Noto Sans SC','Inter'];return fonts.map(f=>`<option value="${f}" ${t.titleFont.includes(f)?'selected':''}>${f}</option>`).join('')})()}
-          </select>
-          <p style="color:rgba(255,255,255,0.25);font-size:11px;margin-top:4px">效果预览：<span style="font-family:'${t.titleFont}',serif;font-size:20px;color:#fff">镜中世界 · 标题字体</span></p>
-
-          <label style="color:rgba(255,255,255,0.5);font-size:13px;display:block;margin:14px 0 6px">正文字体</label>
-          <select id="fontBody" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none">
-            ${(()=>{const fonts=['Noto Sans SC','Inter','Noto Serif SC','Cormorant Garamond'];return fonts.map(f=>`<option value="${f}" ${t.bodyFont.includes(f)?'selected':''}>${f}</option>`).join('')})()}
-          </select>
-          <p style="color:rgba(255,255,255,0.25);font-size:11px;margin-top:4px">效果预览：<span style="font-family:'${t.bodyFont}',sans-serif;font-size:14px;color:rgba(255,255,255,0.6)">这是一段正文内容的字体效果展示。</span></p>
-
-          <label style="color:rgba(255,255,255,0.5);font-size:13px;display:block;margin:14px 0 6px">策展人介绍字体</label>
-          <select id="fontCurator" style="width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none">
-            ${(()=>{const fonts=['Cormorant Garamond','Noto Serif SC','Playfair Display','Noto Sans SC'];return fonts.map(f=>`<option value="${f}" ${t.curatorFont.includes(f)?'selected':''}>${f}</option>`).join('')})()}
-          </select>
-          <p style="color:rgba(255,255,255,0.25);font-size:11px;margin-top:4px">效果预览：<span style="font-family:'${t.curatorFont}',serif;font-size:16px;color:var(--gold)">张昊文 · 策展人</span></p>
-
-          <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0">
-          <h3 style="color:#fff;font-size:18px;margin-bottom:12px;font-family:var(--title-font)">📁 自定义字体</h3>
-          <p style="color:rgba(255,255,255,0.35);font-size:12px;margin-bottom:8px">上传 .woff2 字体文件（上传后自动生效）</p>
-          <input type="file" id="customFont" accept=".woff2,.woff,.ttf,.otf" onchange="handleCustomFont(event)" style="width:100%;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:13px">
-          <div id="customFontList" style="margin-top:10px"></div>
-
-          <button class="btn" style="margin-top:14px" onclick="saveFonts()">💾 保存字体设置</button>
-        </div>
-      </div>`;
-
-    // 渲染已上传的自定义字体列表
-    const customFonts=JSON.parse(localStorage.getItem('custom_fonts')||'[]');
-    if(customFonts.length){
-      document.getElementById('customFontList').innerHTML=customFonts.map((f,i)=>`
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,0.04)">
-          <span style="color:rgba(255,255,255,0.5);font-size:13px">${f.name} <span style="color:rgba(255,255,255,0.25)">(${f.format})</span></span>
-          <button class="btn-danger" onclick="delCustomFont(${i})">删除</button>
-        </div>`).join('');
-    }
-  }
-
-  // ---- 设置 ----
-  else if(tab==='settings'){
-    main.innerHTML=`<h2>⚙ 设置</h2><div class="admin-form">
-      <label>导出全部数据（JSON）</label>
-      <button class="btn" onclick="exportData()">📥 导出数据</button>
-      <button class="btn" onclick="exportTheme()">🎨 导出外观</button>
-      <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0;">
-      <label>导入数据备份</label>
-      <input type="file" id="importFile" accept=".json">
-      <button class="btn" onclick="importData()">📤 导入</button>
-      <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0;">
-      <label>修改密码</label>
-      <input type="password" id="newPass" placeholder="新密码">
-      <button class="btn" onclick="changePass()">🔑 修改</button>
-      <p id="settingsMsg" style="color:#8ab4ff;margin-top:12px;font-size:13px"></p>
     </div>`;
-  }
+  });
+
+  if(!curators.length) html+='<div class="admin-empty">暂无策展人，请在上方添加</div>';
+  main.innerHTML=html;
 }
 
-// ============ 外观：背景图处理 ============
-function handleBgImgSelect(e){
-  const file=e.target.files[0];
-  if(!file) return;
-  if(file.size>20*1024*1024){toast('背景图超过20MB');return}
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    const img=new Image();
-    img.onload=function(){
-      const canvas=document.createElement('canvas');
-      let w=img.width,h=img.height;
-      const max=1920;
-      if(w>max){h=Math.round(h*(max/w));w=max}
-      canvas.width=w;canvas.height=h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      const dataUrl=canvas.toDataURL('image/jpeg',0.82);
-      const t=getTheme();
-      t.bgImage=dataUrl;
-      saveTheme(t);
-      applyTheme();
-      toast('✅ 背景图已设置');
-      switchAdmin('appearance');
-    };
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
+// 新增策展人时预览写真
+function previewNewPortrait(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=function(ev){document.getElementById('newPortraitPreview').innerHTML=`<img src="${ev.target.result}" style="width:120px;height:150px;object-fit:cover;border-radius:10px;border:2px solid rgba(255,255,255,0.1)">`};r.readAsDataURL(f);
 }
-function handleBgImgDrop(e){e.preventDefault();document.getElementById('bgImgInput').files=e.dataTransfer.files;handleBgImgSelect({target:{files:e.dataTransfer.files}})}
-function updateOverlay(v){document.getElementById('bgOverlayVal').textContent=`rgba(0,0,0,${v/100})`}
+// 更换写真时预览
+function previewPortraitChange(i){
+  const f=document.getElementById('cuPortrait'+i).files[0];if(!f)return;
+  const r=new FileReader();r.onload=function(ev){document.getElementById('portraitPreview'+i).innerHTML=`<img src="${ev.target.result}" style="width:100px;height:130px;object-fit:cover;border-radius:8px;border:2px solid rgba(255,255,255,0.1)">`};r.readAsDataURL(f);
+}
 
-// ============ 外观：保存 ============
-function saveAppearance(){
+// ============ 🎨 外观首页 ============
+function renderAppearanceHome(main,theme){
+  main.innerHTML=`<h2>🎨 外观设置</h2><p class="subtitle">点击左侧子菜单进入各板块独立编辑页面</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:20px">
+    ${[
+      ['背景颜色/图片','appr-bg','🖼','设置纯色背景或上传背景图片，调节暗化遮罩让文字更清晰'],
+      ['背景板颜色','appr-board','🎨','每张照片后面的展板颜色，预设 10 色 + 自由选色'],
+      ['标题字体','appr-title','🔤','Hero 标题、展览标题、章节标题的字体'],
+      ['正文字体','appr-body','📝','专栏正文、策展陈述、说明文字的字体'],
+      ['策展人字体','appr-curator','✒️','策展人姓名、头衔、签名的字体'],
+      ['自定义字体','appr-custom','📁','上传 .ttf/.otf/.woff/.woff2 字体文件'],
+    ].map(([t,id,icon,desc])=>`<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px;cursor:pointer;transition:.3s" onclick="switchAdmin('${id}')" onmouseover="this.style.borderColor='var(--klein)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'"><div style="font-size:28px;margin-bottom:8px">${icon}</div><h3 style="color:#fff;font-size:16px;margin-bottom:6px;font-family:var(--title-font)">${t}</h3><p style="color:rgba(255,255,255,0.35);font-size:13px;line-height:1.6">${desc}</p><p style="color:var(--klein);font-size:12px;margin-top:10px">进入 →</p></div>`).join('')}
+  </div>
+  <div class="save-bar"><span style="color:rgba(255,255,255,0.4);font-size:13px">💡 每次修改外观后，记得在对应页面点「💾 保存」并到 ⚙ 设置 导出 theme.json 上传到 GitHub</span></div>`;
+}
+
+// ============ 🎨 子页：背景颜色/图片 ============
+function renderApprBg(main,theme){
+  const ovVal=parseInt((theme.bgOverlay.match(/[\d.]+/)||[60])[0]);
+  main.innerHTML=`<div class="breadcrumb"><a onclick="switchAdmin('appearance')">🎨 外观</a><span>/</span><span>背景颜色/图片</span></div>
+  <h2>🖼 背景设置</h2><p class="subtitle">修改后页面背景实时变化，点保存后生效</p>
+
+  <div class="sub-panel">
+    <h3>背景颜色</h3><p class="hint">选择纯色作为页面底色（不上传背景图时生效）</p>
+    <div class="color-row"><input type="color" class="color-input" id="bgColorInput" value="${theme.bgColor}"><span style="color:rgba(255,255,255,0.35);font-size:12px" id="bgColorVal">${theme.bgColor}</span></div>
+    <p style="color:rgba(255,255,255,0.25);font-size:11px;margin-top:6px">实时预览：看页面背景是否已变化 ↓</p>
+  </div>
+
+  <div class="sub-panel">
+    <h3>背景图片</h3><p class="hint">上传一张图片作为全站背景（自动压缩到 1920px 宽）</p>
+    <div class="upload-zone" onclick="document.getElementById('bgImgInput').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleBgImgDrop(event)">
+      <p>${theme.bgImage?'✅ 已设置背景图（点击更换）':'点击或拖拽图片到此'}</p>
+      <input type="file" id="bgImgInput" accept="image/*" style="display:none" onchange="handleBgImgSelect(event)">
+    </div>
+    <div class="bg-preview">${theme.bgImage?`<img src="${theme.bgImage}" alt="">`:`<div class="placeholder">暂无背景图</div>`}</div>
+  </div>
+
+  <div class="sub-panel">
+    <h3>暗化遮罩</h3><p class="hint">背景之上的半透明黑色层，值越大文字越清晰</p>
+    <input type="range" id="bgOverlayRange" min="0" max="90" value="${ovVal}">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.25)"><span>透明</span><span id="bgOverlayVal">${theme.bgOverlay}</span><span>全暗</span></div>
+    <p style="color:rgba(255,255,255,0.25);font-size:11px;margin-top:8px">拖动滑块时页面实时变化 ↓</p>
+  </div>
+
+  <div class="save-bar"><button class="btn" onclick="saveBg()">💾 保存背景设置</button><span class="status" id="bgStatus"></span></div>`;
+
+  // 实时预览绑定
+  document.getElementById('bgColorInput').addEventListener('input',function(){
+    document.getElementById('bgColorVal').textContent=this.value;
+    const t=getTheme();t.bgColor=this.value;saveTheme(t);applyTheme();
+  });
+  document.getElementById('bgOverlayRange').addEventListener('input',function(){
+    document.getElementById('bgOverlayVal').textContent=`rgba(0,0,0,${this.value/100})`;
+    const t=getTheme();t.bgOverlay=`rgba(0,0,0,${this.value/100})`;saveTheme(t);applyTheme();
+  });
+}
+
+function saveBg(){
   const t=getTheme();
   t.bgColor=document.getElementById('bgColorInput').value;
-  t.boardColor=document.getElementById('boardColorInput').value;
-  const ov=document.getElementById('bgOverlayRange').value;
-  t.bgOverlay=`rgba(0,0,0,${ov/100})`;
-  saveTheme(t);
-  applyTheme();
-  toast('✅ 外观设置已保存');
-}
-function setThemeColor(key,val){
-  const t=getTheme();
-  t[key]=val;
-  saveTheme(t);
-  applyTheme();
-  if(key==='boardColor') document.getElementById('boardColorInput').value=val;
-  toast(`✅ 已设为 ${val}`);
+  t.bgOverlay=`rgba(0,0,0,${document.getElementById('bgOverlayRange').value/100})`;
+  saveTheme(t);applyTheme();
+  document.getElementById('bgStatus').textContent='✅ 已保存';
+  document.getElementById('bgStatus').className='status saved';
+  toast('✅ 背景设置已保存');
 }
 
-// ============ 字体 ============
-function saveFonts(){
-  const t=getTheme();
-  const tf=document.getElementById('fontTitle').value;
-  const bf=document.getElementById('fontBody').value;
-  const cf=document.getElementById('fontCurator').value;
-  t.titleFont=`'${tf}'`;
-  t.bodyFont=`'${bf}'`;
-  t.curatorFont=`'${cf}'`;
-  // 如果有自定义字体，注入
-  const custom=JSON.parse(localStorage.getItem('custom_fonts')||'[]');
-  custom.forEach(f=>{
-    const ff=f.name.replace(/\.[^.]+$/,'');
-    if(!document.getElementById('font-'+ff)){
-      const style=document.createElement('style');
-      style.id='font-'+ff;
-      style.textContent=`@font-face{font-family:'${ff}';src:url(${f.data}) format('${f.format}');font-display:swap}`;
-      document.head.appendChild(style);
-    }
+// ============ 🎨 子页：背景板颜色 ============
+function renderApprBoard(main,theme,data){
+  const colors=theme.boardColors||defaultTheme.boardColors;
+  const cur=theme.boardColor;
+  // 统计哪些展览的组照用了哪些颜色
+  main.innerHTML=`<div class="breadcrumb"><a onclick="switchAdmin('appearance')">🎨 外观</a><span>/</span><span>背景板颜色</span></div>
+  <h2>🎨 背景板颜色</h2><p class="subtitle">每张照片后面的展板颜色，实时预览下方卡片</p>
+
+  <div class="sub-panel">
+    <h3>当前颜色</h3>
+    <div class="color-row"><input type="color" class="color-input" id="boardColorInput" value="${cur}"><span style="color:rgba(255,255,255,0.35);font-size:13px" id="boardColorVal">${cur}</span></div>
+    <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px">预设色板（点击直接切换）：</p>
+    <div class="color-presets">${colors.map(c=>`<div class="color-preset ${c===cur?'active':''}" style="background:${c}" onclick="setBoardColor('${c}')" title="${c}"></div>`).join('')}</div>
+    <div style="margin-top:10px"><input type="text" id="boardColorHex" placeholder="或输入色值如 #1a3a5a" style="width:220px;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;background:rgba(255,255,255,0.04);color:#fff;font-size:13px"><button class="btn-small" style="margin-left:8px" onclick="setBoardColor(document.getElementById('boardColorHex').value.trim())">应用</button></div>
+  </div>
+
+  <div class="sub-panel">
+    <h3>实时预览</h3><p class="hint">下面的展板颜色会随你的选择实时变化</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+      <div class="photo-board" style="--board-color:${cur}"><div class="board-color-bar"></div><div style="width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#222,#444);border-radius:3px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:14px">示例照片</div><div class="photo-caption">示例 · 背景板预览</div></div>
+      <div class="photo-board" style="--board-color:${cur};transform:scale(0.95)"><div class="board-color-bar"></div><div style="width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#333,#1a1a2a);border-radius:3px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15);font-size:14px">竖构图</div><div class="photo-caption">竖构图示例</div></div>
+    </div>
+  </div>
+
+  <div class="save-bar"><button class="btn" onclick="saveBoardColorGlobal()">💾 保存为背景板默认色</button><span class="status" id="boardStatus"></span></div>`;
+
+  document.getElementById('boardColorInput').addEventListener('input',function(){
+    document.getElementById('boardColorVal').textContent=this.value;
+    // 实时改 CSS 变量让预览即时变
+    document.documentElement.style.setProperty('--board-color',this.value);
+    // 重渲染预览
+    const boards=document.querySelectorAll('.photo-board');
+    boards.forEach(b=>{b.style.setProperty('--board-color',this.value)});
   });
-  saveTheme(t);
-  applyTheme();
-  toast('✅ 字体设置已保存');
 }
 
+function setBoardColor(val){
+  if(!val||!val.match(/^#[0-9a-fA-F]{6}$/)){toast('请输入正确的 #RRGGBB 格式');return}
+  document.documentElement.style.setProperty('--board-color',val);
+  document.getElementById('boardColorInput').value=val;
+  document.getElementById('boardColorVal').textContent=val;
+  const boards=document.querySelectorAll('.photo-board');
+  boards.forEach(b=>{b.style.setProperty('--board-color',val)});
+  // 更新色板激活态
+  document.querySelectorAll('.color-preset').forEach(p=>{
+    p.classList.toggle('active',p.style.background===val||p.getAttribute('style').includes(val));
+  });
+}
+function saveBoardColorGlobal(){
+  const t=getTheme();
+  t.boardColor=document.getElementById('boardColorInput').value;
+  // 也加到预设里
+  if(!t.boardColors.includes(t.boardColor)) t.boardColors.push(t.boardColor);
+  saveTheme(t);applyTheme();
+  document.getElementById('boardStatus').textContent='✅ 已保存';
+  document.getElementById('boardStatus').className='status saved';
+  toast('✅ 背景板颜色已保存');
+}
+
+// ============ 🎨 子页：字体（通用） ============
+function renderApprFont(main,key,title,desc){
+  const theme=getTheme();
+  const cur=theme[key+'Font'];
+  // 合并内置+自定义
+  const custom=getCustomFonts().map(f=>({name:f.name.replace(/\.[^.]+$/,'')+' (自定义)',cat:'custom',loaded:true,raw:f.name.replace(/\.[^.]+$/,'')}));
+  const all=[...fontCatalog,...custom];
+
+  const sampleTexts={title:'镜中世界 · 2026',body:'这是一段正文内容的字体效果展示，用于预览阅读体验。',curator:'张昊文 · 策展人'};
+  const st=sampleTexts[key]||'字体预览';
+
+  main.innerHTML=`<div class="breadcrumb"><a onclick="switchAdmin('appearance')">🎨 外观</a><span>/</span><span>${title}</span></div>
+  <h2>${title}</h2><p class="subtitle">${desc} · 点击卡片即时预览，点保存生效</p>
+
+  <div class="sub-panel">
+    <h3>选择字体</h3><p class="hint">当前：${cur}</p>
+    <div class="font-option-grid" id="fontGrid"></div>
+  </div>
+
+  <div class="sub-panel">
+    <h3>实时预览</h3><p class="hint">切换字体时下方文字即时变化</p>
+    <div class="preview-card">
+      ${key==='title'?`<div class="preview-hero-title" id="fontPreview">${st}</div>`:''}
+      ${key==='body'?`<div class="preview-body-text" id="fontPreview">${st}</div>`:''}
+      ${key==='curator'?`<div class="preview-curator-text" id="fontPreview">${st}</div>`:''}
+    </div>
+    <p style="color:rgba(255,255,255,0.25);font-size:12px;margin-top:12px">前端全局效果：导航栏、Hero、展览卡片、专栏等已实时变化 ↓</p>
+  </div>
+
+  <div class="save-bar"><button class="btn" onclick="saveFont('${key}')">💾 保存${title}</button><span class="status" id="fontStatus"></span></div>`;
+
+  // 渲染字体卡片
+  const grid=document.getElementById('fontGrid');
+  grid.innerHTML=all.map(f=>{
+    const ff=f.raw||f.name;
+    const isActive=(cur.includes(ff)||cur===ff);
+    const fam=f.raw?`'${f.raw}'`:`'${f.name}'`;
+    return `<div class="font-option-card ${isActive?'active':''}" onclick="applyFontPreview('${key}','${ff.replace(/'/g,"\\'")}','${f.cat}')" id="fc-${ff.replace(/[^a-zA-Z0-9]/g,'')}">
+      <div class="sample" style="font-family:${fam}">${f.raw||f.name}</div>
+      <div class="name">${f.cat==='custom'?'自定义 · ':''}${f.raw||f.name}</div></div>`;
+  }).join('');
+
+  // 初始预览
+  window._curFontKey=key;
+}
+
+function applyFontPreview(key,fontName,cat){
+  // 高亮卡片
+  document.querySelectorAll('.font-option-card').forEach(c=>c.classList.remove('active'));
+  const safeId='fc-'+fontName.replace(/[^a-zA-Z0-9]/g,'');
+  const card=document.getElementById(safeId);
+  if(card) card.classList.add('active');
+  // 实时应用
+  const fam=`'${fontName}'`;
+  const root=document.documentElement;
+  if(key==='title') root.style.setProperty('--title-font',fam);
+  if(key==='body') root.style.setProperty('--body-font',fam);
+  if(key==='curator') root.style.setProperty('--curator-font',fam);
+  window._pendingFont={key,fontName};
+  toast(`已切换为 ${fontName}`);
+}
+
+function saveFont(key){
+  const pf=window._pendingFont;
+  if(!pf||pf.key!==key){toast('请先选择一个字体');return}
+  const t=getTheme();
+  const fam=`'${pf.fontName}'`;
+  if(key==='title') t.titleFont=pf.fontName;
+  if(key==='body') t.bodyFont=pf.fontName;
+  if(key==='curator') t.curatorFont=pf.fontName;
+  saveTheme(t);applyTheme();
+  document.getElementById('fontStatus').textContent='✅ 已保存';
+  document.getElementById('fontStatus').className='status saved';
+  toast(`✅ ${key}字体已保存`);
+}
+
+// ============ 🎨 子页：自定义字体 ============
+function renderApprCustom(main){
+  const fonts=getCustomFonts();
+  main.innerHTML=`<div class="breadcrumb"><a onclick="switchAdmin('appearance')">🎨 外观</a><span>/</span><span>自定义字体</span></div>
+  <h2>📁 自定义字体</h2><p class="subtitle">上传 .ttf / .otf / .woff / .woff2 文件，上传后自动注入页面</p>
+
+  <div class="sub-panel">
+    <h3>上传字体文件</h3><p class="hint">支持格式：.ttf（TrueType）· .otf（OpenType）· .woff · .woff2</p>
+    <div class="upload-zone" onclick="document.getElementById('customFontInput').click()">
+      <div class="upload-icon">📥</div>
+      <p><strong>点击或拖拽字体文件到此</strong></p>
+      <p style="font-size:12px">文件会自动转码并注入到页面中</p>
+      <input type="file" id="customFontInput" accept=".ttf,.otf,.woff,.woff2" style="display:none" onchange="handleCustomFont(event)">
+    </div>
+  </div>
+
+  <div class="sub-panel">
+    <h3>已上传字体</h3><p class="hint">在「标题字体/正文字体/策展人字体」页面可直接选用</p>
+    ${fonts.length?fonts.map((f,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="color:rgba(255,255,255,0.6);font-size:14px">📄 ${f.name} <span style="color:rgba(255,255,255,0.25);font-size:12px">(${f.format})</span></span><button class="btn-danger" onclick="delCustomFont(${i})">删除</button></div>`).join(''):'<div class="admin-empty">暂无自定义字体</div>'}
+  </div>`;
+}
+
+// ============ 字体上传（兼容 ttf） ============
 function handleCustomFont(e){
   const file=e.target.files[0];
   if(!file) return;
-  const fmt=(file.name.match(/\.(woff2|woff|ttf|otf)$/i)||['woff2'])[0].replace('.','');
+  // 识别真实格式
+  const lower=file.name.toLowerCase();
+  let fmt='truetype';
+  if(lower.endsWith('.woff2')) fmt='woff2';
+  else if(lower.endsWith('.woff')) fmt='woff';
+  else if(lower.endsWith('.otf')) fmt='truetype'; // otf 用 truetype format
+  else if(lower.endsWith('.ttf')) fmt='truetype';
+  else {toast('仅支持 .ttf/.otf/.woff/.woff2');return}
+
   const reader=new FileReader();
   reader.onload=function(ev){
-    const custom=JSON.parse(localStorage.getItem('custom_fonts')||'[]');
+    const fonts=getCustomFonts();
     const fname=file.name.replace(/\.[^.]+$/,'');
-    custom.push({name:file.name,format:fmt,data:ev.target.result});
-    localStorage.setItem('custom_fonts',JSON.stringify(custom));
-    // 注入 @font-face
-    const ff=fname;
-    const style=document.createElement('style');
-    style.id='font-'+ff;
-    style.textContent=`@font-face{font-family:'${ff}';src:url(${ev.target.result}) format('${fmt}');font-display:swap}`;
-    document.head.appendChild(style);
-    toast(`✅ 字体 ${file.name} 已上传`);
-    switchAdmin('appearance');
+    // 去重
+    const exists=fonts.findIndex(f=>f.name.replace(/\.[^.]+$/,'')===fname);
+    if(exists>=0) fonts.splice(exists,1);
+    fonts.push({name:file.name,format:fmt,data:ev.target.result});
+    saveCustomFonts(fonts);
+    // 注入
+    const sid='cf-'+fname;
+    const old=document.getElementById(sid);
+    if(old) old.remove();
+    const s=document.createElement('style');
+    s.id=sid;
+    s.textContent=`@font-face{font-family:'${fname}';src:url(${ev.target.result}) format('${fmt}');font-display:swap}`;
+    document.head.appendChild(s);
+    toast(`✅ 字体 ${file.name} 已上传（${fmt}）`);
+    switchAdmin('appr-custom');
   };
   reader.readAsDataURL(file);
 }
 
 function delCustomFont(i){
   if(!confirm('删除该字体？')) return;
-  const custom=JSON.parse(localStorage.getItem('custom_fonts')||'[]');
-  custom.splice(i,1);
-  localStorage.setItem('custom_fonts',JSON.stringify(custom));
-  switchAdmin('appearance');
+  const fonts=getCustomFonts();
+  const f=fonts[i];
+  fonts.splice(i,1);
+  saveCustomFonts(fonts);
+  // 移除注入
+  const sid='cf-'+f.name.replace(/\.[^.]+$/,'');
+  const el=document.getElementById(sid);
+  if(el) el.remove();
+  switchAdmin('appr-custom');
   toast('已删除');
 }
 
-// ============ 上传交互 ============
+// ============ 上传 ============
+function renderUpload(main,data,theme){
+  main.innerHTML=`<h2>🖼 上传作品（组照）</h2><p class="subtitle">选展览 → 选/建组照 → 拖拽多张图片 → 选背景板颜色 → 上传</p>
+  <div class="admin-form">
+    <label>选择展览</label>
+    <select id="uploadEx" onchange="onUploadExChange()"><option value="">-- 选择展览 --</option>${data.exhibitions.map(ex=>`<option value="${ex.id}">${ex.title}</option>`).join('')}</select>
+    <label>选择/新建组照</label>
+    <select id="uploadWg"><option value="">-- 先选展览 --</option></select>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('uploadFiles').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
+      <div class="upload-icon">📥</div>
+      <p><strong>点击或拖拽图片到此（支持多选）</strong></p>
+      <p style="font-size:12px">单张最大 20MB · 自动压缩</p>
+      <input type="file" id="uploadFiles" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
+    </div>
+    <div class="preview-list" id="previewList"></div>
+    <label style="margin-top:14px">组照标题</label>
+    <input type="text" id="uploadWgTitle" placeholder="例如：霓虹与夕照">
+    <label>组照介绍词</label>
+    <textarea id="uploadWgDesc" placeholder="策展说明"></textarea>
+    <label>背景板颜色</label>
+    <div class="color-row"><input type="color" class="color-input" id="uploadBoardColor" value="${theme.boardColor}"><span style="color:rgba(255,255,255,0.35);font-size:12px" id="uploadBoardColorVal">${theme.boardColor}</span></div>
+    <button class="btn" onclick="doUploadGroup()">⬆ 上传并保存组照</button>
+  </div>`;
+  window._pendingPhotos=[];
+  document.getElementById('uploadBoardColor').addEventListener('input',function(){document.getElementById('uploadBoardColorVal').textContent=this.value});
+}
+
 function onUploadExChange(){
   const exId=document.getElementById('uploadEx').value;
   const sel=document.getElementById('uploadWg');
@@ -989,60 +953,52 @@ function onUploadExChange(){
 function handleDrop(e){e.preventDefault();document.getElementById('uploadZone').classList.remove('dragover');addFilesToPreview(e.dataTransfer.files)}
 function handleFileSelect(e){addFilesToPreview(e.target.files)}
 function addFilesToPreview(files){
-  const maxSize=20*1024*1024;
-  for(const file of files){
-    if(file.size>maxSize){toast(`${file.name} 超过20MB`);continue}
-    const reader=new FileReader();
-    reader.onload=function(ev){
+  const max=20*1024*1024;
+  for(const f of files){
+    if(f.size>max){toast(`${f.name} 超过20MB`);continue}
+    const r=new FileReader();
+    r.onload=function(ev){
       const img=new Image();
       img.onload=function(){
-        const canvas=document.createElement('canvas');
-        let w=img.width,h=img.height;const maxDim=2400;
-        if(w>maxDim||h>maxDim){if(w>h){w=maxDim;h=Math.round(img.height*(maxDim/img.width))}else{h=maxDim;w=Math.round(img.width*(maxDim/h))}}
-        canvas.width=w;canvas.height=h;
-        canvas.getContext('2d').drawImage(img,0,0,w,h);
-        let q=0.88,result;
-        for(let i=0;i<5;i++){result=canvas.toDataURL('image/jpeg',q);if(result.length<1048576)break;q-=0.1}
+        const c=document.createElement('canvas');
+        let w=img.width,h=img.height;const mx=2400;
+        if(w>mx||h>mx){if(w>h){w=mx;h=Math.round(img.height*(mx/img.width))}else{h=mx;w=Math.round(img.width*(mx/h))}}
+        c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+        let q=0.88,res;for(let i=0;i<5;i++){res=c.toDataURL('image/jpeg',q);if(res.length<1048576)break;q-=0.1}
         if(!window._pendingPhotos) window._pendingPhotos=[];
-        window._pendingPhotos.push({image:result,caption:file.name.replace(/\.[^.]+$/,'')});
+        window._pendingPhotos.push({image:res,caption:f.name.replace(/\.[^.]+$/,'')});
         renderPreviewList();
       };
       img.src=ev.target.result;
     };
-    reader.readAsDataURL(file);
+    r.readAsDataURL(f);
   }
 }
 function renderPreviewList(){
   const list=document.getElementById('previewList');
   if(!list) return;
-  list.innerHTML=(window._pendingPhotos||[]).map((p,i)=>`<div class="preview-item"><img src="${p.image}" alt=""><button class="remove" onclick="removePendingPhoto(${i})">×</button></div>`).join('');
+  list.innerHTML=(window._pendingPhotos||[]).map((p,i)=>`<div class="preview-item"><img src="${p.image}"><button class="remove" onclick="removePendingPhoto(${i})">×</button></div>`).join('');
 }
 function removePendingPhoto(i){window._pendingPhotos.splice(i,1);renderPreviewList()}
-
 function doUploadGroup(){
   const exId=document.getElementById('uploadEx').value;
   const wgId=document.getElementById('uploadWg').value;
   const title=document.getElementById('uploadWgTitle').value.trim();
   const desc=document.getElementById('uploadWgDesc').value.trim();
-  const boardColor=document.getElementById('uploadBoardColor').value;
+  const bc=document.getElementById('uploadBoardColor').value;
   const photos=window._pendingPhotos||[];
   if(!exId){toast('请选择展览');return}
-  if(photos.length===0 && wgId!=='__new__'){toast('请至少上传一张图片');return}
+  if(photos.length===0&&wgId!=='__new__'){toast('请至少上传一张');return}
+  const data=getData();
+  const ex=data.exhibitions.find(e=>e.id===exId);
   if(wgId==='__new__'||!wgId){
     if(!title){toast('新建组照请填写标题');return}
-    const data=getData();
-    const ex=data.exhibitions.find(e=>e.id===exId);
-    ex.artworks.push({id:'w'+Date.now(),title,desc,photos:photos.slice(),boardColor});
-    saveData(data);
-    toast(`✅ 组照「${title}」已创建（${photos.length}张）`);
+    ex.artworks.push({id:'w'+Date.now(),title,desc,photos:photos.slice(),boardColor:bc});
+    saveData(data);toast(`✅ 组照「${title}」已创建（${photos.length}张）`);
   } else {
-    const data=getData();
-    const ex=data.exhibitions.find(e=>e.id===exId);
     const wg=ex.artworks.find(w=>w.id===wgId);
     if(photos.length){wg.photos=wg.photos.concat(photos.slice());toast(`✅ 已添加 ${photos.length} 张`)}
-    if(title) wg.title=title;
-    if(desc) wg.desc=desc;
-    wg.boardColor=boardColor;
+    if(title) wg.title=title;if(desc) wg.desc=desc;wg.boardColor=bc;
     saveData(data);
   }
   renderHome();
@@ -1054,256 +1010,103 @@ function doUploadGroup(){
   onUploadExChange();
 }
 
-// ============ 背景板颜色编辑 ============
+// ============ 背景板颜色（组照级） ============
 function editBoardColor(exId,wgId){
   const data=getData();
   const wg=data.exhibitions.find(e=>e.id===exId).artworks.find(w=>w.id===wgId);
-  const t=getTheme();
-  const current=wg.boardColor||t.boardColor;
-  const colors=['#002fa7','#0d2818','#c9a84c','#1a1a1a','#2a0a0a','#0a1a2a','#1a0a2a','#3a2a0a','#0a3a2a','#2a1a3a'];
-  let html=`<h3 style="color:#fff;margin-bottom:14px;font-family:var(--title-font)">🎨 编辑背景板颜色</h3>
-    <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:12px">「${wg.title}」当前颜色：${current}</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <input type="color" class="color-input" id="editBoardColor" value="${current}">
-      <span style="color:rgba(255,255,255,0.35);font-size:13px" id="editBoardColorVal">${current}</span>
-    </div>
-    <p style="color:rgba(255,255,255,0.35);font-size:12px;margin:14px 0 8px">预设色板：</p>
-    <div class="color-presets">${colors.map(c=>`<div class="color-preset" style="background:${c}" onclick="document.getElementById('editBoardColor').value='${c}';document.getElementById('editBoardColorVal').textContent='${c}'"></div>`).join('')}</div>
-    <div style="margin-top:20px;display:flex;gap:10px">
-      <button class="btn" onclick="saveBoardColor('${exId}','${wgId}')">💾 保存</button>
-      <button class="btn-small" onclick="switchAdmin('exhibitions')">取消</button>
-    </div>`;
-  document.getElementById('adminMain').innerHTML=html;
+  const cur=wg.boardColor||getTheme().boardColor;
+  const colors=getTheme().boardColors||defaultTheme.boardColors;
+  const main=document.getElementById('adminMain');
+  main.innerHTML=`<div class="breadcrumb"><a onclick="switchAdmin('exhibitions')">📂 展览</a><span>/</span><span>编辑背景板颜色</span></div>
+    <h2>🎨 编辑背景板颜色</h2><p class="subtitle">「${wg.title}」</p>
+    <div class="color-row"><input type="color" class="color-input" id="editBoardColor" value="${cur}"><span style="color:rgba(255,255,255,0.35);font-size:13px" id="editBoardColorVal">${cur}</span></div>
+    <div class="color-presets" style="margin-top:12px">${colors.map(c=>`<div class="color-preset ${c===cur?'active':''}" style="background:${c}" onclick="document.getElementById('editBoardColor').value='${c}';document.getElementById('editBoardColorVal').textContent='${c}'"></div>`).join('')}</div>
+    <div style="margin-top:16px"><input type="text" id="editBoardHex" placeholder="或输入色值如 #3a1a5a" style="width:220px;padding:8px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;background:rgba(255,255,255,0.04);color:#fff;font-size:13px"><button class="btn-small" style="margin-left:8px" onclick="applyEditBoardColor()">应用</button></div>
+    <div style="margin-top:24px;display:flex;gap:10px"><button class="btn" onclick="saveEditBoardColor('${exId}','${wgId}')">💾 保存</button><button class="btn-small" onclick="switchAdmin('exhibitions')">取消</button></div>`;
   document.getElementById('editBoardColor').addEventListener('input',function(){document.getElementById('editBoardColorVal').textContent=this.value});
 }
-function saveBoardColor(exId,wgId){
+function applyEditBoardColor(){
+  const v=document.getElementById('editBoardHex').value.trim();
+  if(v.match(/^#[0-9a-fA-F]{6}$/)){document.getElementById('editBoardColor').value=v;document.getElementById('editBoardColorVal').textContent=v;toast('已应用')}
+}
+function saveEditBoardColor(exId,wgId){
+  const v=document.getElementById('editBoardColor').value;
   const data=getData();
   const wg=data.exhibitions.find(e=>e.id===exId).artworks.find(w=>w.id===wgId);
-  wg.boardColor=document.getElementById('editBoardColor').value;
+  wg.boardColor=v;
   saveData(data);
-  toast(`✅ 背景板颜色已更新`);
+  toast('✅ 背景板颜色已更新');
   switchAdmin('exhibitions');
 }
 
-// ============ 组照 CRUD ============
-function addWorkGroup(exId){
-  const title=prompt('组照标题：');
-  if(!title||!title.trim()) return;
-  const desc=prompt('组照介绍词（可留空）：')||'';
-  const data=getData();
-  const ex=data.exhibitions.find(e=>e.id===exId);
-  const t=getTheme();
-  ex.artworks.push({id:'w'+Date.now(),title:title.trim(),desc,photos:[],boardColor:t.boardColor});
-  saveData(data);
-  switchAdmin('exhibitions');
-  renderHome();
-  toast('组照已添加');
-}
-function editWorkGroup(exId,wgId){
-  const data=getData();
-  const wg=data.exhibitions.find(e=>e.id===exId).artworks.find(w=>w.id===wgId);
-  const newTitle=prompt('组照标题：',wg.title);
-  if(newTitle!==null && newTitle.trim()) wg.title=newTitle.trim();
-  const newDesc=prompt('组照介绍词：',wg.desc||'');
-  if(newDesc!==null) wg.desc=newDesc;
-  saveData(data);
-  switchAdmin('exhibitions');
-  renderHome();
-  toast('已更新');
-}
-function delWorkGroup(exId,wgId){
-  if(!confirm('确定删除该组照及其所有图片？')) return;
-  const data=getData();
-  const ex=data.exhibitions.find(e=>e.id===exId);
-  ex.artworks=ex.artworks.filter(w=>w.id!==wgId);
-  saveData(data);
-  switchAdmin('exhibitions');
-  renderHome();
-  toast('已删除');
-}
-
-// ============ 展览 CRUD ============
-function addExhibition(){
-  const t=document.getElementById('newExTitle').value.trim();
-  if(!t){toast('请输入展览名称');return}
-  const data=getData();
-  const t2=getTheme();
-  data.exhibitions.push({id:'ex'+Date.now(),title:t,tags:(document.getElementById('newExTags').value||'').split(/[,，]/).map(s=>s.trim()).filter(Boolean),statement:document.getElementById('newExStmt').value||'暂无策展陈述',artworks:[]});
-  saveData(data);
-  switchAdmin('exhibitions');
-  renderHome();
-  toast('展览已添加');
-}
-function delExhibition(id){
-  if(!confirm('确定删除该展览及其所有组照？')) return;
-  const data=getData();
-  data.exhibitions=data.exhibitions.filter(e=>e.id!==id);
-  saveData(data);
-  switchAdmin('exhibitions');
-  renderHome();
-  toast('已删除');
-}
-
-// ============ 专栏 CRUD ============
-function addColumn(){
-  const t=document.getElementById('newColTitle').value.trim();
-  if(!t){toast('请输入标题');return}
-  const data=getData();
-  data.columns.push({id:'c'+Date.now(),title:t,date:document.getElementById('newColDate').value||new Date().toISOString().slice(0,10),body:document.getElementById('newColBody').value||''});
-  saveData(data);
-  switchAdmin('columns');
-  renderHome();
-  toast('文章已添加');
-}
-function delColumn(id){
-  if(!confirm('确定删除？')) return;
-  const data=getData();
-  data.columns=data.columns.filter(c=>c.id!==id);
-  saveData(data);
-  switchAdmin('columns');
-  renderHome();
-  toast('已删除');
-}
+// ============ 组照/展览 CRUD ============
+function addWorkGroup(exId){const t=prompt('组照标题：');if(!t||!t.trim())return;const d=prompt('介绍词（可空）：')||'';const data=getData();const ex=data.exhibitions.find(e=>e.id===exId);ex.artworks.push({id:'w'+Date.now(),title:t.trim(),desc:d,photos:[],boardColor:getTheme().boardColor});saveData(data);switchAdmin('exhibitions');renderHome();toast('组照已添加')}
+function editWorkGroup(exId,wgId){const data=getData();const wg=data.exhibitions.find(e=>e.id===exId).artworks.find(w=>w.id===wgId);const t=prompt('标题：',wg.title);if(t!==null&&t.trim())wg.title=t.trim();const d=prompt('介绍词：',wg.desc||'');if(d!==null)wg.desc=d;saveData(data);switchAdmin('exhibitions');renderHome();toast('已更新')}
+function delWorkGroup(exId,wgId){if(!confirm('删除该组照及所有图片？'))return;const data=getData();const ex=data.exhibitions.find(e=>e.id===exId);ex.artworks=ex.artworks.filter(w=>w.id!==wgId);saveData(data);switchAdmin('exhibitions');renderHome();toast('已删除')}
+function addExhibition(){const t=document.getElementById('newExTitle').value.trim();if(!t){toast('请输入名称');return}const data=getData();data.exhibitions.push({id:'ex'+Date.now(),title:t,tags:(document.getElementById('newExTags').value||'').split(/[,，]/).map(s=>s.trim()).filter(Boolean),statement:document.getElementById('newExStmt').value||'暂无策展陈述',artworks:[]});saveData(data);switchAdmin('exhibitions');renderHome();toast('展览已添加')}
+function delExhibition(id){if(!confirm('删除该展览及所有组照？'))return;const data=getData();data.exhibitions=data.exhibitions.filter(e=>e.id!==id);saveData(data);switchAdmin('exhibitions');renderHome();toast('已删除')}
+function addColumn(){const t=document.getElementById('newColTitle').value.trim();if(!t){toast('请输入标题');return}const data=getData();data.columns.push({id:'c'+Date.now(),title:t,date:document.getElementById('newColDate').value||new Date().toISOString().slice(0,10),body:document.getElementById('newColBody').value||''});saveData(data);switchAdmin('columns');renderHome();toast('文章已添加')}
+function delColumn(id){if(!confirm('删除？'))return;const data=getData();data.columns=data.columns.filter(c=>c.id!==id);saveData(data);switchAdmin('columns');renderHome();toast('已删除')}
 
 // ============ 策展人 CRUD ============
 function addCurator(){
-  const name=document.getElementById('newCuName').value.trim();
-  if(!name){toast('请输入姓名');return}
+  const name=document.getElementById('newCuName').value.trim();if(!name){toast('请输入姓名');return}
   const role=document.getElementById('newCuRole').value.trim();
   const bio=document.getElementById('newCuBio').value.trim();
   const fileInput=document.getElementById('newCuPortrait');
-  const data=getData();
-  if(!data.curators) data.curators=[];
-
-  const finishAdd=(portrait='')=>{
-    data.curators.push({id:'cu'+Date.now(),name,role,bio,portrait});
-    saveData(data);
-    switchAdmin('curators');
-    renderHome();
-    toast(`✅ 策展人「${name}」已添加`);
-  };
-
-  if(fileInput.files[0]){
-    const file=fileInput.files[0];
-    if(file.size>5*1024*1024){toast('写真图片不超过5MB');return}
-    const reader=new FileReader();
-    reader.onload=function(e){
-      const img=new Image();
-      img.onload=function(){
-        const canvas=document.createElement('canvas');
-        let w=img.width,h=img.height;const max=800;
-        if(w>max){h=Math.round(h*(max/w));w=max}
-        canvas.width=w;canvas.height=h;
-        canvas.getContext('2d').drawImage(img,0,0,w,h);
-        finishAdd(canvas.toDataURL('image/jpeg',0.85));
-      };
-      img.src=e.target.result;
-    };
-    reader.readAsDataURL(file);
-  } else {
-    finishAdd('');
-  }
+  const data=getData();if(!data.curators)data.curators=[];
+  const finish=(portrait='')=>{data.curators.push({id:'cu'+Date.now(),name,role,bio,portrait});saveData(data);switchAdmin('curators');renderHome();toast(`✅ ${name} 已添加`)};
+  if(fileInput.files[0]){const f=fileInput.files[0];if(f.size>5*1024*1024){toast('写真≤5MB');return}const r=new FileReader();r.onload=function(e){const img=new Image();img.onload=function(){const c=document.createElement('canvas');let w=img.width,h=img.height;const mx=800;if(w>mx){h=Math.round(h*(mx/w));w=mx}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);finish(c.toDataURL('image/jpeg',0.85))};img.src=e.target.result};r.readAsDataURL(f)}
+  else finish();
 }
-
 function saveCurator(i){
-  const data=getData();
-  const c=data.curators[i];
+  const data=getData();const c=data.curators[i];
   c.name=document.getElementById(`cuName${i}`).value.trim();
   c.role=document.getElementById(`cuRole${i}`).value.trim();
   c.bio=document.getElementById(`cuBio${i}`).value.trim();
   const fileInput=document.getElementById(`cuPortrait${i}`);
+  const finish=(p)=>{if(p)c.portrait=p;saveData(data);switchAdmin('curators');renderHome();toast('已保存')};
+  if(fileInput.files[0]){const f=fileInput.files[0];if(f.size>5*1024*1024){toast('写真≤5MB');return}const r=new FileReader();r.onload=function(e){const img=new Image();img.onload=function(){const cv=document.createElement('canvas');let w=img.width,h=img.height;const mx=800;if(w>mx){h=Math.round(h*(mx/w));w=mx}cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);finish(cv.toDataURL('image/jpeg',0.85))};img.src=e.target.result};r.readAsDataURL(f)}
+  else finish(null);
+}
+function delCurator(i){if(!confirm('删除该策展人？'))return;const data=getData();data.curators.splice(i,1);saveData(data);switchAdmin('curators');renderHome();toast('已删除')}
 
-  const finish=(portrait)=>{
-    if(portrait) c.portrait=portrait;
-    saveData(data);
-    switchAdmin('curators');
-    renderHome();
-    toast('已保存');
-  };
+// ============ 背景图处理 ============
+function handleBgImgSelect(e){
+  const file=e.target.files[0];if(!file)return;if(file.size>20*1024*1024){toast('背景图≤20MB');return}
+  const r=new FileReader();r.onload=function(ev){const img=new Image();img.onload=function(){const c=document.createElement('canvas');let w=img.width,h=img.height;const mx=1920;if(w>mx){h=Math.round(h*(mx/w));w=mx}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);const t=getTheme();t.bgImage=c.toDataURL('image/jpeg',0.82);saveTheme(t);applyTheme();toast('✅ 背景图已设置');switchAdmin('appr-bg')};img.src=ev.target.result};r.readAsDataURL(file);
+}
+function handleBgImgDrop(e){e.preventDefault();document.getElementById('bgImgInput').files=e.dataTransfer.files;handleBgImgSelect({target:{files:e.dataTransfer.files}})}
+function updateOverlay(v){document.getElementById('bgOverlayVal').textContent=`rgba(0,0,0,${v/100})`}
 
-  if(fileInput.files[0]){
-    const file=fileInput.files[0];
-    if(file.size>5*1024*1024){toast('写真不超过5MB');return}
-    const reader=new FileReader();
-    reader.onload=function(e){
-      const img=new Image();
-      img.onload=function(){
-        const canvas=document.createElement('canvas');
-        let w=img.width,h=img.height;const max=800;
-        if(w>max){h=Math.round(h*(max/w));w=max}
-        canvas.width=w;canvas.height=h;
-        canvas.getContext('2d').drawImage(img,0,0,w,h);
-        finish(canvas.toDataURL('image/jpeg',0.85));
-      };
-      img.src=e.target.result;
-    };
-    reader.readAsDataURL(file);
-  } else {finish(null)}
+// ============ 设置 ============
+function renderSettings(main){
+  main.innerHTML=`<h2>⚙ 设置</h2><p class="subtitle">数据备份 / 恢复 / 密码</p>
+  <div class="admin-form">
+    <label>导出数据 (data.json)</label>
+    <button class="btn" onclick="exportData()">📥 导出数据</button>
+    <label style="margin-top:14px">导出外观配置 (theme.json)</label>
+    <button class="btn" onclick="exportTheme()">🎨 导出外观</button>
+    <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0;">
+    <label>导入数据备份</label>
+    <input type="file" id="importFile" accept=".json">
+    <button class="btn" onclick="importData()">📤 导入</button>
+    <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0;">
+    <label>修改密码</label>
+    <input type="password" id="newPass" placeholder="新密码">
+    <button class="btn" onclick="changePass()">🔑 修改</button>
+    <p id="settingsMsg" style="color:#8ab4ff;margin-top:12px;font-size:13px"></p>
+  </div>`;
 }
-
-function delCurator(i){
-  if(!confirm('确定删除该策展人？')) return;
-  const data=getData();
-  data.curators.splice(i,1);
-  saveData(data);
-  switchAdmin('curators');
-  renderHome();
-  toast('已删除');
-}
-
-// ============ 备份/设置 ============
-function exportData(){
-  const blob=new Blob([localStorage.getItem(STORAGE_KEY)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='mirror-world-data.json';a.click();
-  URL.revokeObjectURL(url);
-  toast('数据已导出');
-}
-function exportTheme(){
-  const blob=new Blob([localStorage.getItem(THEME_KEY)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='mirror-world-theme.json';a.click();
-  URL.revokeObjectURL(url);
-  toast('外观配置已导出');
-}
-function importData(){
-  const file=document.getElementById('importFile').files[0];
-  if(!file){toast('请选择文件');return}
-  const reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      const d=JSON.parse(e.target.result);
-      if(!d.exhibitions||!d.columns) throw 0;
-      // 兼容旧版单策展人
-      if(d.curator&&!d.curators) d.curators=[{id:'cu0',name:d.curator.name,role:d.curator.role,bio:d.curator.bio,portrait:d.curator.portrait||''}];
-      saveData(d);
-      renderHome();
-      switchAdmin('dashboard');
-      toast('导入成功');
-    }catch(err){toast('文件格式不正确')}
-  };
-  reader.readAsText(file);
-}
-function changePass(){
-  const np=document.getElementById('newPass').value.trim();
-  if(!np||np.length<4){toast('密码至少4位');return}
-  const acc=JSON.parse(localStorage.getItem(ACCOUNT_KEY));
-  acc.password=np;
-  localStorage.setItem(ACCOUNT_KEY,JSON.stringify(acc));
-  document.getElementById('settingsMsg').textContent='✅ 密码已修改';
-  toast('密码已更新');
-}
+function exportData(){const b=new Blob([localStorage.getItem(STORAGE_KEY)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='mirror-world-data.json';a.click();URL.revokeObjectURL(u);toast('数据已导出')}
+function exportTheme(){const b=new Blob([localStorage.getItem(THEME_KEY)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='mirror-world-theme.json';a.click();URL.revokeObjectURL(u);toast('外观已导出')}
+function importData(){const f=document.getElementById('importFile').files[0];if(!f){toast('请选择文件');return}const r=new FileReader();r.onload=function(e){try{const d=JSON.parse(e.target.result);if(!d.exhibitions||!d.columns)throw 0;if(d.curator&&!d.curators)d.curators=[{id:'cu0',name:d.curator.name,role:d.curator.role,bio:d.curator.bio,portrait:d.curator.portrait||''}];saveData(d);renderHome();switchAdmin('dashboard');toast('导入成功')}catch(err){toast('格式不正确')}};r.readAsText(fr=f)}
+function changePass(){const np=document.getElementById('newPass').value.trim();if(!np||np.length<4){toast('密码至少4位');return}const acc=JSON.parse(localStorage.getItem(ACCOUNT_KEY));acc.password=np;localStorage.setItem(ACCOUNT_KEY,JSON.stringify(acc));document.getElementById('settingsMsg').textContent='✅ 密码已修改';toast('密码已更新')}
 
 // ============ Toast ============
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;
-  el.classList.add('show');
-  clearTimeout(el._timer);
-  el._timer=setTimeout(()=>el.classList.remove('show'),2200);
-}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._timer);el._timer=setTimeout(()=>el.classList.remove('show'),2200)}
 
-document.getElementById('loginOverlay').addEventListener('click',function(e){if(e.target===this) this.style.display='none'});
+document.getElementById('loginOverlay').addEventListener('click',function(e){if(e.target===this)this.style.display='none'});
 </script>
 </body>
 </html>
