@@ -9,8 +9,8 @@
 三个文件放 GitHub 仓库根目录 → Settings → Pages → Deploy from a branch → main / root → Save
 
 ## 账号
-- 账号：海屿
-- 密码：mse20221028
+- 账号：xx
+- 密码：xxxxxxxxxx
 
 ## 外观设置子页面
 | 子页面 | 功能 | 实时预览 |
