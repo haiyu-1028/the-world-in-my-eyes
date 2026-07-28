@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>镜中世界 · 线上画廊</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:#0a1a10;color:#e0e0e0;line-height:1.7;overflow-x:hidden;transition:background-color .6s,background-image .6s}
+:root{--klein:#002fa7;--green:#0d2818;--gold:#c9a84c;--board-color:#1a2332}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a1a10}
+::-webkit-scrollbar-thumb{background:var(--klein);border-radius:3px}
+
+/* 导航 */
+.navbar{position:fixed;top:0;left:0;right:0;height:64px;background:rgba(13,40,24,0.92);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:900;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-brand{font-size:22px;font-weight:700;letter-spacing:4px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:10px}
+.nav-brand svg{width:28px;height:28px;color:var(--klein)}
+.nav-links{display:flex;align-items:center;gap:18px}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;transition:.3s;padding:6px 14px;border-radius:20px}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.06)}
+.nav-admin{background:var(--klein)!important;color:#fff!important;padding:6px 20px!important;border-radius:30px!important}
+
+/* Hero */
+.hero{height:70vh;min-height:420px;background:linear-gradient(160deg,#0a1a10 0%,#001633 50%,#0a1a10 100%);display:flex;align-items:center;justify-content:center;text-align:center;padding-top:64px}
+.hero h1{font-size:68px;letter-spacing:12px;color:#fff;margin-bottom:16px;text-shadow:0 4px 40px rgba(0,47,167,0.3)}
+.hero p{font-size:18px;color:rgba(255,255,255,0.55);max-width:520px;margin:0 auto}
+.hero .curator{color:var(--gold);font-size:15px;letter-spacing:3px;margin-top:12px}
+
+/* Section */
+.section{max-width:1200px;margin:0 auto;padding:80px 24px}
+.section-title{font-size:32px;letter-spacing:4px;color:#fff;margin-bottom:44px;text-align:center}
+.section-title::after{content:'';display:block;width:50px;height:2px;background:var(--klein);margin:14px auto 0}
+
+/* 展览卡片 */
+.exhibition-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
+.exhibition-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:32px 28px;cursor:pointer;transition:.4s;position:relative;overflow:hidden}
+.exhibition-card:hover{border-color:var(--klein);transform:translateY(-6px);background:rgba(255,255,255,0.07)}
+.exhibition-card h3{font-size:22px;color:#fff;margin-bottom:8px;letter-spacing:1px;font-family:var(--font-title,serif)}
+.exhibition-card .tags{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.exhibition-card .tag{background:rgba(0,47,167,0.2);color:#8ab4ff;padding:2px 12px;border-radius:20px;font-size:11px}
+.exhibition-card p{color:rgba(255,255,255,0.45);font-size:14px;line-height:1.8}
+.exhibition-card .meta{color:rgba(255,255,255,0.35);font-size:12px;margin-top:12px}
+.exhibition-card .enter-hint{color:var(--klein);font-size:13px;margin-top:12px;opacity:0;transition:.4s}
+.exhibition-card:hover .enter-hint{opacity:1}
+
+/* 专栏 */
+.column-article{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px 30px;margin-bottom:20px}
+.column-article h3{font-size:20px;color:#fff;margin-bottom:4px;font-family:var(--font-title,serif)}
+.column-article .date{color:rgba(255,255,255,0.3);font-size:13px;margin-bottom:10px}
+.column-article .body{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.9;white-space:pre-wrap;font-family:var(--font-body,sans-serif)}
+
+/* 策展人 */
+.curator-block{display:flex;gap:40px;align-items:flex-start;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:40px;margin-bottom:32px;position:relative;overflow:hidden}
+.curator-block:nth-child(even){flex-direction:row-reverse}
+.curator-photo-wrap{position:relative;flex-shrink:0}
+.curator-photo{width:260px;height:320px;object-fit:cover;border-radius:16px;display:block;box-shadow:0 12px 40px rgba(0,0,0,0.5),inset 0 0 60px rgba(0,0,0,0.3)}
+.curator-photo-wrap::after{content:'';position:absolute;inset:0;border-radius:16px;box-shadow:inset 0 0 80px rgba(0,47,167,0.15)}
+.curator-info .index{color:var(--klein);font-size:13px;letter-spacing:3px;margin-bottom:8px}
+.curator-info h3{font-size:36px;color:#fff;margin-bottom:6px;font-family:var(--font-curator,serif)}
+.curator-info .role{color:var(--gold);font-size:14px;letter-spacing:2px;margin:6px 0 16px}
+.curator-info .bio{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.9;white-space:pre-wrap;font-family:var(--font-curator,sans-serif)}
+.curator-info .contact{color:var(--gold);font-size:13px;margin-top:14px}
+
+/* 页脚 */
+.footer{text-align:center;padding:40px 24px;color:rgba(255,255,255,0.2);font-size:13px;border-top:1px solid rgba(255,255,255,0.04)}
+
+/* 展览详情 */
+.detail-page{display:none;min-height:100vh;padding-top:64px}
+.detail-back{padding:24px 32px 0;max-width:1200px;margin:0 auto}
+.detail-back a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:14px;cursor:pointer}
+.detail-back a:hover{color:#fff}
+.detail-header{padding:40px 32px 20px;max-width:1200px;margin:0 auto}
+.detail-header h1{font-size:38px;color:#fff;letter-spacing:3px;margin-bottom:8px;font-family:var(--font-title,serif)}
+.detail-header .statement{color:rgba(255,255,255,0.5);font-size:15px;line-height:1.9;max-width:800px;font-family:var(--font-body,sans-serif)}
+.detail-grid{padding:20px 32px 60px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
+
+/* 展板 */
+.photo-board{background:var(--board-color,var(--klein));border-radius:14px;padding:16px 16px 14px;transition:background-color .4s,transform .3s,box-shadow .3s;box-shadow:0 18px 40px -12px rgba(0,0,0,0.6),0 4px 12px -4px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.06);position:relative;overflow:hidden}
+.photo-board::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--klein),var(--gold))}
+.photo-board:hover{transform:translateY(-4px);box-shadow:0 28px 50px -12px rgba(0,0,0,0.7),0 0 30px -5px var(--klein)}
+.photo-board img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:8px;background:#111}
+.photo-board .info{padding:12px 4px 0}
+.photo-board .info h4{font-size:15px;color:#fff;margin-bottom:2px}
+.photo-board .info p{font-size:12px;color:rgba(255,255,255,0.45)}
+
+/* 组照区块 */
+.group-block{margin-bottom:48px}
+.group-header{display:flex;align-items:baseline;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.group-header h3{font-size:22px;color:#fff;font-family:var(--font-title,serif)}
+.group-header .count{color:rgba(255,255,255,0.35);font-size:13px}
+
+/* 灯箱 */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:3000;display:none;align-items:center;justify-content:center;flex-direction:column}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,47,167,0.3)}
+.lightbox .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#fff;font-size:28px;width:56px;height:56px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s}
+.lightbox .lb-nav:hover{background:var(--klein)}
+.lightbox .lb-prev{left:24px}
+.lightbox .lb-next{right:24px}
+.lightbox .lb-close{position:absolute;top:24px;right:24px;background:rgba(255,255,255,0.1);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer}
+.lightbox .lb-counter{color:rgba(255,255,255,0.5);font-size:14px;margin-top:16px}
+
+/* 后台 */
+.admin-page{display:none;min-height:100vh;padding-top:64px;background:#0a1510}
+.admin-topbar{position:fixed;top:64px;left:0;right:0;height:48px;background:rgba(10,21,16,0.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:850;border-bottom:1px solid rgba(255,255,255,0.04)}
+.admin-topbar .at-left{color:rgba(255,255,255,0.6);font-size:14px}
+.admin-topbar .at-right{display:flex;align-items:center;gap:12px}
+.admin-topbar .at-user{color:var(--gold);font-size:13px}
+.admin-topbar .at-logout{background:rgba(255,80,80,0.15);color:#ff6b6b;border:1px solid rgba(255,80,80,0.3);padding:6px 16px;border-radius:20px;cursor:pointer;font-size:13px;transition:.3s}
+.admin-topbar .at-logout:hover{background:rgba(255,80,80,0.25)}
+.admin-container{display:flex;min-height:calc(100vh - 112px);margin-top:48px}
+.admin-sidebar{width:220px;background:rgba(0,0,0,0.3);padding:24px 0;border-right:1px solid rgba(255,255,255,0.05);flex-shrink:0;overflow-y:auto}
+.admin-sidebar a{display:block;padding:11px 24px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:14px;transition:.3s;cursor:pointer;border-left:3px solid transparent}
+.admin-sidebar a:hover{color:#fff;background:rgba(255,255,255,0.03)}
+.admin-sidebar a.active{color:#fff;background:rgba(0,47,167,0.15);border-left-color:var(--klein)}
+.admin-sidebar .sub-item{padding-left:40px;font-size:13px}
+.admin-sidebar .sidebar-logout{margin-top:20px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px}
+.admin-sidebar .sidebar-logout a{color:#ff6b6b}
+.admin-main{flex:1;padding:32px 40px;overflow-y:auto}
+.admin-main h2{font-size:24px;color:#fff;margin-bottom:24px;letter-spacing:2px}
+.admin-form label{display:block;color:rgba(255,255,255,0.6);margin:14px 0 4px;font-size:13px}
+.admin-form input,.admin-form textarea,.admin-form select{width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none;transition:.3s}
+.admin-form input:focus,.admin-form textarea:focus{border-color:var(--klein)}
+.admin-form textarea{min-height:100px;resize:vertical}
+.btn{background:var(--klein);color:#fff;border:none;padding:10px 28px;border-radius:30px;cursor:pointer;font-size:14px;transition:.3s;margin-top:12px}
+.btn:hover{background:#003bb5;transform:translateY(-1px)}
+.btn-danger{background:#a83232;color:#fff;border:none;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:12px;transition:.3s}
+.btn-danger:hover{background:#c73e3e}
+.admin-list-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.admin-list-item span{color:rgba(255,255,255,0.6);font-size:14px}
+.admin-empty{color:rgba(255,255,255,0.2);text-align:center;padding:40px 0;font-size:14px}
+
+/* 拖拽区 */
+.drop-zone{border:2px dashed rgba(255,255,255,0.15);border-radius:14px;padding:36px;text-align:center;cursor:pointer;transition:.3s;margin:12px 0;position:relative}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--klein);background:rgba(0,47,167,0.05)}
+.drop-zone .dz-icon{font-size:36px;margin-bottom:8px}
+.drop-zone .dz-text{color:rgba(255,255,255,0.5);font-size:14px}
+.drop-zone .dz-hint{color:rgba(255,255,255,0.3);font-size:12px;margin-top:6px}
+.drop-zone .dz-input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop-zone .dz-btn{display:inline-block;margin-top:10px;padding:8px 20px;background:var(--klein);color:#fff;border-radius:20px;font-size:13px;pointer-events:none}
+
+/* 进度条 */
+.progress{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin:12px 0;display:none}
+.progress.active{display:block}
+.progress .progress-bar{height:100%;background:linear-gradient(90deg,var(--klein),var(--gold));border-radius:3px;transition:width .3s;width:0%}
+
+/* Toast */
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(0,0,0,0.88);color:#fff;padding:14px 32px;border-radius:30px;font-size:14px;z-index:9999;opacity:0;transition:.4s;pointer-events:none;backdrop-filter:blur(10px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.error{background:rgba(168,50,50,0.9)}
+.toast.success{background:rgba(34,139,34,0.9)}
+
+/* 弹窗 */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.82);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.active{display:flex}
+.modal-content{background:#141e18;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px 40px;width:90%;max-width:640px;max-height:85vh;overflow-y:auto;position:relative}
+.modal-content .close-btn{position:absolute;top:16px;right:20px;font-size:26px;color:rgba(255,255,255,0.4);cursor:pointer;background:none;border:none;transition:.3s}
+.modal-content .close-btn:hover{color:#fff}
+
+/* 登录 */
+.login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.82);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center}
+.login-overlay.active{display:flex}
+.login-card{background:#141e18;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:40px 36px;width:340px;text-align:center}
+.login-card h2{color:#fff;font-size:24px;letter-spacing:3px;margin-bottom:20px}
+.login-card input{width:100%;padding:12px 16px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.15);border-radius:10px;background:rgba(255,255,255,0.06);color:#fff;font-size:15px;outline:none}
+.login-card input:focus{border-color:var(--klein)}
+.login-card button{width:100%;padding:12px;border:none;border-radius:10px;background:var(--klein);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:.3s}
+.login-card button:hover{background:#003bb5}
+.login-card .error{color:#ff6b6b;font-size:13px;margin-top:12px;min-height:20px}
+
+/* 颜色选择器 */
+.color-row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.3s}
+.color-swatch:hover{border-color:rgba(255,255,255,0.3)}
+.color-swatch.active{border-color:#fff;transform:scale(1.1)}
+.color-picker-wrap{display:flex;align-items:center;gap:12px;margin:12px 0}
+.color-picker-wrap input[type="color"]{width:48px;height:36px;border:none;border-radius:8px;cursor:pointer;background:none}
+.color-picker-wrap span{color:rgba(255,255,255,0.5);font-size:13px}
+
+/* 实时预览区 */
+.preview-area{margin-top:24px;padding:24px;background:rgba(255,255,255,0.03);border-radius:14px;border:1px solid rgba(255,255,255,0.06)}
+.preview-area h4{color:rgba(255,255,255,0.7);font-size:13px;margin-bottom:12px;letter-spacing:1px}
+.preview-board{display:inline-block;background:var(--preview-board,var(--klein));border-radius:10px;padding:12px;margin:8px;transition:background-color .3s}
+.preview-board.landscape{width:200px}
+.preview-board.portrait{width:140px}
+.preview-board .pb-img{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:12px}
+.preview-board.portrait .pb-img{aspect-ratio:3/4}
+.preview-text{margin-top:12px;padding:12px;background:rgba(0,0,0,0.3);border-radius:8px}
+.preview-text .pt-title{font-size:20px;color:#fff;margin-bottom:4px}
+.preview-text .pt-body{font-size:13px;color:rgba(255,255,255,0.5)}
+
+/* 字体卡片 */
+.font-card{display:inline-block;padding:12px 20px;margin:6px;border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:pointer;transition:.3s;min-width:160px;text-align:center}
+.font-card:hover{border-color:var(--klein);background:rgba(0,47,167,0.08)}
+.font-card.active{border-color:var(--klein);background:rgba(0,47,167,0.15)}
+.font-card .fc-name{color:#fff;font-size:14px;margin-bottom:4px}
+.font-card .fc-sample{color:rgba(255,255,255,0.5);font-size:13px}
+.font-card .fc-format{color:rgba(255,255,255,0.3);font-size:11px;margin-top:2px}
+
+/* 文件列表 */
+.file-list{margin:12px 0;max-height:200px;overflow-y:auto}
+.file-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:6px}
+.file-item .fi-name{color:rgba(255,255,255,0.7);font-size:13px}
+.file-item .fi-size{color:rgba(255,255,255,0.3);font-size:12px}
+.file-item .fi-remove{color:#ff6b6b;cursor:pointer;font-size:16px;margin-left:8px}
+
+/* 策展人卡片（后台） */
+.curator-admin-card{display:flex;gap:20px;align-items:flex-start;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;margin-bottom:16px}
+.curator-admin-card .cac-photo{width:100px;height:130px;object-fit:cover;border-radius:10px;background:#111;flex-shrink:0}
+.curator-admin-card .cac-info{flex:1}
+.curator-admin-card .cac-info h4{color:#fff;font-size:16px;margin-bottom:4px}
+.curator-admin-card .cac-actions{display:flex;gap:8px;margin-top:10px}
+
+/* 编辑弹窗 */
+.edit-modal .modal-content{max-width:560px}
+.edit-modal label{display:block;color:rgba(255,255,255,0.6);margin:14px 0 4px;font-size:13px}
+.edit-modal input,.edit-modal textarea{width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none}
+.edit-modal textarea{min-height:120px;resize:vertical}
+.edit-modal .photo-upload-row{display:flex;gap:16px;align-items:center;margin-top:12px}
+.edit-modal .photo-preview{width:100px;height:130px;object-fit:cover;border-radius:10px;background:#111}
+
+/* 保存栏 */
+.save-bar{position:sticky;bottom:0;background:rgba(10,21,16,0.95);backdrop-filter:blur(10px);padding:16px 0;margin-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:flex-end;gap:12px}
+
+/* 面包屑 */
+.breadcrumb{color:rgba(255,255,255,0.3);font-size:13px;margin-bottom:16px}
+.breadcrumb a{color:rgba(255,255,255,0.5);cursor:pointer;text-decoration:none}
+.breadcrumb a:hover{color:#fff}
+
+/* 统计卡片 */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:20px 0}
+.stat-card{background:rgba(255,255,255,0.04);border-radius:14px;padding:24px;text-align:center;border:1px solid rgba(255,255,255,0.04)}
+.stat-card .stat-num{font-size:36px;color:#fff;font-weight:700}
+.stat-card .stat-label{color:rgba(255,255,255,0.4);font-size:13px;margin-top:4px}
+.bar-chart{margin:24px 0}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar-row .bar-label{width:160px;color:rgba(255,255,255,0.6);font-size:13px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-row .bar-track{flex:1;height:20px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;position:relative}
+.bar-row .bar-fill{height:100%;background:linear-gradient(90deg,var(--klein),var(--gold));border-radius:10px;transition:width .6s}
+.bar-row .bar-val{color:rgba(255,255,255,0.5);font-size:12px;min-width:40px}
+
+/* 响应式 */
+@media(max-width:768px){
+  .hero h1{font-size:40px;letter-spacing:6px}
+  .exhibition-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .admin-sidebar{width:140px}
+  .admin-sidebar a{padding:10px 16px;font-size:13px}
+  .admin-main{padding:20px}
+  .curator-block{flex-direction:column!important}
+  .curator-photo{width:100%;height:auto;aspect-ratio:3/4}
+}
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav class="navbar">
+  <div class="nav-brand" onclick="showHome()">
+    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="20" r="10" stroke="currentColor" stroke-width="1.2"/><circle cx="29" cy="11" r="3" fill="currentColor" opacity="0.6"/></svg>
+    镜中世界
+  </div>
+  <div class="nav-links">
+    <a href="#" onclick="document.getElementById('exhibitions').scrollIntoView({behavior:'smooth'})">展览</a>
+    <a href="#" onclick="document.getElementById('columns').scrollIntoView({behavior:'smooth'})">专栏</a>
+    <a href="#" onclick="document.getElementById('curator').scrollIntoView({behavior:'smooth'})">策展人</a>
+    <a href="#" class="nav-admin" onclick="openLogin()">⚙ 管理</a>
+  </div>
+</nav>
+
+<!-- 登录弹窗 -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <h2>🔐 内部管理</h2>
+    <input type="text" id="loginUser" placeholder="账号" value="海屿">
+    <input type="password" id="loginPass" placeholder="密码">
+    <button onclick="handleLogin()">验证身份</button>
+    <div class="error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ===== 首页 ===== -->
+<div id="homePage">
+<section class="hero">
+  <div>
+    <h1>镜中世界</h1>
+    <p>摄影是现实的一面透镜，也是通往另一个世界的窗口。</p>
+    <div class="curator">策展人：张昊文</div>
+  </div>
+</section>
+
+<section class="section" id="exhibitions">
+  <h2 class="section-title">展览</h2>
+  <div class="exhibition-grid" id="exhibitionGrid"></div>
+</section>
+
+<section class="section" id="columns">
+  <h2 class="section-title">文字专栏</h2>
+  <div id="columnList"></div>
+</section>
+
+<section class="section" id="curator">
+  <h2 class="section-title">策展人</h2>
+  <div id="curatorList"></div>
+</section>
+
+<footer class="footer">© 2026 镜中世界 · 线上画廊 &nbsp;|&nbsp; 策展人：张昊文</footer>
+</div>
+
+<!-- ===== 展览详情页 ===== -->
+<div class="detail-page" id="detailPage">
+  <div class="detail-back"><a onclick="showHome()">← 返回首页</a></div>
+  <div class="detail-header" id="detailHeader"></div>
+  <div class="detail-grid" id="detailGrid"></div>
+</div>
+
+<!-- ===== 后台管理页 ===== -->
+<div class="admin-page" id="adminPage">
+  <div class="admin-topbar">
+    <div class="at-left">⚙ 内部管理</div>
+    <div class="at-right">
+      <span class="at-user" id="atUser"></span>
+      <button class="at-logout" onclick="confirmLogout()">🚪 退出登录</button>
+    </div>
+  </div>
+  <div class="admin-container">
+    <div class="admin-sidebar" id="adminSidebar"></div>
+    <div class="admin-main" id="adminMain"></div>
+  </div>
+</div>
+
+<!-- 编辑策展人弹窗 -->
+<div class="modal edit-modal" id="curatorEditModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeCuratorEdit()">&times;</button>
+    <h2 id="curatorEditTitle">编辑策展人</h2>
+    <div class="edit-modal">
+      <div class="photo-upload-row">
+        <img class="photo-preview" id="cePhotoPreview" src="" alt="写真预览">
+        <div>
+          <label>更换写真</label>
+          <input type="file" id="cePhotoInput" accept="image/*" style="color:#fff">
+          <p style="color:rgba(255,255,255,0.3);font-size:12px;margin-top:6px">建议 800px 以上，最大 5MB</p>
+        </div>
+      </div>
+      <label>姓名</label>
+      <input type="text" id="ceName">
+      <label>头衔</label>
+      <input type="text" id="ceRole">
+      <label>履历</label>
+      <textarea id="ceBio"></textarea>
+      <div style="display:flex;gap:12px;margin-top:20px;justify-content:space-between">
+        <button class="btn-danger" onclick="deleteCuratorFromEdit()">🗑 删除策展人</button>
+        <div style="display:flex;gap:12px">
+          <button class="btn-secondary" style="background:rgba(255,255,255,0.08);color:#fff;border:none;padding:10px 24px;border-radius:30px;cursor:pointer;font-size:14px" onclick="closeCuratorEdit()">取消</button>
+          <button class="btn" onclick="saveCuratorEdit()">💾 保存修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 灯箱 -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-nav lb-prev" onclick="lbNav(-1)">&#10094;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lightbox-nav lb-next" onclick="lbNav(1)">&#10095;</button>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// 镜中世界 · 完整版 v8
+// 修复：字体上传闭环、实时预览、退出确认、组照删除
+// ============================================================
+
+const STORAGE_KEY = 'mirror_world_data';
+const ACCOUNT_KEY = 'mirror_world_account';
+const SESSION_KEY = 'mirror_admin_logged';
+const THEME_KEY = 'mirror_world_theme';
+
+const defaultAccount = { username: '海屿', password: 'mse20221028' };
+
+const defaultData = {
+  exhibitions: [
+    { id:'ex0', title:'2025夏天的颜色', tags:['摄影·年度特展'], statement:'银盐的颗粒感与数字像素的冷冽在此交织。2025年的夏天，我们试图用镜头捕捉那些即将消逝的色彩——褪色的广告牌、夕照下的塑料花、地铁站里陌生人的瞳孔。摄影史告诉我们，每一次对色彩的记录，都是一次对时间的挽留。', artworks:[], groups:[], views:0, style:{boardColor:'#002fa7',titleFont:'',bodyFont:''} },
+    { id:'ex1', title:'2026夏天的颜色', tags:['摄影·年度特展'], statement:'当克莱因蓝遇见深绿，当胶片质感碰撞算法美学。2026年的夏天，色彩不再只是视觉经验，而成为了一种哲学追问。正如伊夫·克莱因所言："蓝色是没有维度的，它超越了维度。"', artworks:[], groups:[], views:0, style:{boardColor:'#0d2818',titleFont:'',bodyFont:''} },
+    { id:'ex2', title:'快乐之家', tags:['纪实·长期项目'], statement:'从维多利亚时代的家庭肖像到荒木经惟的私写真，家庭摄影始终在真实与表演之间摇摆。"快乐之家"试图在这个张力中寻找一条属于自己的道路——那些看似平凡的日常瞬间，或许才是摄影最动人的力量。', artworks:[], groups:[], views:0, style:{boardColor:'#1a3320',titleFont:'',bodyFont:''} },
+    { id:'ex3', title:'风光与星空', tags:['风景摄影·自然纪实'], statement:'从19世纪探险摄影师卡尔顿·沃特金斯穿越内华达山脉的玻璃底片，到安塞尔·亚当斯的月升时分，再到当代星空摄影师的银河长曝——人类对大地与星空的仰望从未改变。', artworks:[], groups:[], views:0, style:{boardColor:'#1a1a2e',titleFont:'',bodyFont:''} }
+  ],
+  columns: [
+    { id:'c0', title:'镜面与凝视：摄影的本质追问', date:'2026-03-15', body:'摄影是什么？\n\n是现实的镜像，还是观看的权力？苏珊·桑塔格在《论摄影》中写道："收集照片就是收集世界。"每一张照片都是一次切割，将流动的时间凝固成永恒的碎片。\n\n当我们举起相机，我们既是在记录，也是在创造。镜头前的世界经过取景框的筛选，已经不再是原本的模样。这就是摄影最迷人的悖论——它既忠实于现实，又不可避免地扭曲现实。' },
+    { id:'c1', title:'夏天的视觉考古学', date:'2026-06-01', body:'夏天，或许是摄影最钟情的季节。\n\n强烈的光线制造出戏剧性的阴影，饱和的色彩在高温中几乎要融化。从威廉·埃格尔斯顿的美国南部夏日到川内伦子的微光世界，摄影家们一直在用镜头挖掘夏天深处的秘密。\n\n这个系列专栏将不定期更新，探讨摄影与时间、记忆、情感之间的微妙关系。' }
+  ],
+  curators: [
+    { id:'cur0', name:'张昊文', role:'策展人 · 摄影研究者', bio:'张昊文，24级本科在读，人文、风光摄影师，摄影批评写作者。专注于当代摄影与视觉文化研究与光影艺术表达，关注图像如何塑造、表达情绪与故事内容。致力于在技术与人文的交汇处寻找摄影的新可能。\n\n联系方式：1964391340@qq.com', photo:'' }
+  ]
+};
+
+const defaultTheme = {
+  bgColor: '#0a1a10',
+  bgImage: '',
+  bgDarken: 0.4,
+  boardColor: '#1a2332',
+  titleFont: '',
+  bodyFont: '',
+  curatorFont: '',
+  customFonts: []
+};
+
+// ---- 工具 ----
+function getData(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))}catch(e){return null}}
+function saveData(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
+function getTheme(){try{return JSON.parse(localStorage.getItem(THEME_KEY))||defaultTheme}catch(e){return {...defaultTheme}}}
+function saveTheme(t){try{localStorage.setItem(THEME_KEY,JSON.stringify(t))}catch(e){toast('存储已满，请删除部分自定义字体后重试','error')}}
+function toast(msg,type){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(type?' '+type:'');clearTimeout(el._t);el._t=setTimeout(()=>el.className='toast',2400)}
+function $(id){return document.getElementById(id)}
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+// ---- 初始化 ----
+if(!localStorage.getItem(ACCOUNT_KEY)) localStorage.setItem(ACCOUNT_KEY,JSON.stringify(defaultAccount));
+
+(async ()=>{
+  await loadRemoteData();
+  if(!localStorage.getItem(STORAGE_KEY)) saveData(defaultData);
+  if(!localStorage.getItem(THEME_KEY)) saveTheme(defaultTheme);
+  renderHome();
+  applyTheme();
+})();
+
+async function loadRemoteData(){
+  try{
+    const r=await fetch('./data.json?_='+Date.now());
+    if(!r.ok) throw 0;
+    const d=await r.json();
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(d));
+  }catch(e){}
+  try{
+    const r2=await fetch('./theme.json?_='+Date.now());
+    if(!r2.ok) throw 0;
+    const t=await r2.json();
+    localStorage.setItem(THEME_KEY,JSON.stringify(t));
+  }catch(e){}
+}
+
+// ---- 主题应用 ----
+function applyTheme(){
+  const t=getTheme();
+  document.body.style.backgroundColor=t.bgColor||'#0a1a10';
+  if(t.bgImage){
+    document.body.style.backgroundImage=`linear-gradient(rgba(0,0,0,${t.bgDarken||0.4}),rgba(0,0,0,${t.bgDarken||0.4})),url(${t.bgImage})`;
+    document.body.style.backgroundSize='cover';
+    document.body.style.backgroundAttachment='fixed';
+  }
+  document.documentElement.style.setProperty('--board-color',t.boardColor||'#1a2332');
+  if(t.titleFont) document.documentElement.style.setProperty('--font-title',t.titleFont);
+  if(t.bodyFont) document.documentElement.style.setProperty('--font-body',t.bodyFont);
+  if(t.curatorFont) document.documentElement.style.setProperty('--font-curator',t.curatorFont);
+  applyCustomFonts();
+}
+
+function applyCustomFonts(){
+  const t=getTheme();
+  let style=document.getElementById('custom-fonts-style');
+  if(!style){style=document.createElement('style');style.id='custom-fonts-style';document.head.appendChild(style)}
+  let css='';
+  (t.customFonts||[]).forEach(f=>{
+    css+=`@font-face{font-family:"${f.name}";src:url(${f.data});font-display:swap;}\n`;
+  });
+  style.textContent=css;
+}
+
+// ---- 首页渲染 ----
+function renderHome(){
+  const data=getData()||defaultData;
+  const curators=data.curators||[];
+  const theme=getTheme();
+
+  $('exhibitionGrid').innerHTML=(data.exhibitions||[]).map((ex,i)=>`
+    <div class="exhibition-card" onclick="showDetail('${ex.id}')">
+      <div class="tags">${(ex.tags||[]).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+      <h3>${escapeHtml(ex.title)}</h3>
+      <p>${(ex.statement||'').slice(0,100)}${(ex.statement||'').length>100?'...':''}</p>
+      <div class="meta">${(ex.groups||[]).length} 组 · ${countPhotos(ex)} 张 · ${ex.views||0} 次浏览</div>
+      <div class="enter-hint">点击进入展览 →</div>
+    </div>
+  `).join('');
+
+  $('columnList').innerHTML=(data.columns||[]).map(c=>`
+    <div class="column-article">
+      <h3>${escapeHtml(c.title)}</h3>
+      <div class="date">${escapeHtml(c.date||'')}</div>
+      <div class="body">${(c.body||'').slice(0,200)}${(c.body||'').length>200?'...':''}</div>
+    </div>
+  `).join('')||'<div class="admin-empty">暂无专栏文章</div>';
+
+  $('curatorList').innerHTML=curators.map((c,i)=>`
+    <div class="curator-block">
+      <div class="curator-photo-wrap">
+        ${c.photo?`<img class="curator-photo" src="${c.photo}" alt="${escapeHtml(c.name)}">`:`<div class="curator-photo" style="display:flex;align-items:center;justify-content:center;background:#1a1a2e;color:rgba(255,255,255,0.2);font-size:36px">📷</div>`}
+      </div>
+      <div class="curator-info">
+        <div class="index">— 0${i+1} / 0${curators.length} —</div>
+        <h3>${escapeHtml(c.name)}</h3>
+        <div class="role">${escapeHtml(c.role||'')}</div>
+        <div class="bio">${escapeHtml(c.bio||'').replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>
+  `).join('')||'<div class="admin-empty">暂无策展人</div>';
+}
+
+function countPhotos(ex){
+  let n=0;
+  (ex.groups||[]).forEach(g=>(g.photos||[]).forEach(p=>n++));
+  return n;
+}
+
+// ---- 页面切换 ----
+function showHome(){
+  $('homePage').style.display='block';
+  $('detailPage').style.display='none';
+  $('adminPage').style.display='none';
+}
+function showDetail(id){
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===id);
+  if(!ex) return;
+  ex.views=(ex.views||0)+1;
+  saveData(data);
+  $('homePage').style.display='none';
+  $('adminPage').style.display='none';
+  $('detailPage').style.display='block';
+  const st=ex.style||{};
+  const boardColor=st.boardColor||getTheme().boardColor||'#1a2332';
+  document.documentElement.style.setProperty('--board-color',boardColor);
+  $('detailHeader').innerHTML=`
+    <h1>${escapeHtml(ex.title)}</h1>
+    <div class="statement">${escapeHtml(ex.statement||'').replace(/\n/g,'<br>')}</div>
+  `;
+  const groups=ex.groups||[];
+  if(!groups.length){
+    $('detailGrid').innerHTML='<div class="admin-empty" style="grid-column:1/-1">暂无作品</div>';
+    return;
+  }
+  $('detailGrid').innerHTML=groups.map((g,gi)=>`
+    <div class="group-block" style="grid-column:1/-1">
+      <div class="group-header">
+        <h3>${escapeHtml(g.title||'未命名组照')}</h3>
+        <span class="count">${(g.photos||[]).length} 张</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px">
+        ${(g.photos||[]).map((p,pi)=>`
+          <div class="photo-board" onclick="openLightbox('${ex.id}',${gi},${pi})">
+            <img src="${p.image}" alt="${escapeHtml(p.title||'')}" loading="lazy">
+            <div class="info"><h4>${escapeHtml(p.title||'')}</h4><p>${escapeHtml(p.desc||'')}</p></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---- 灯箱 ----
+let lbState=null;
+function openLightbox(exId,gIdx,pIdx){
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===exId);
+  if(!ex) return;
+  const photos=((ex.groups||[])[gIdx]||{}).photos||[];
+  lbState={photos,idx:pIdx};
+  $('lbImg').src=photos[pIdx].image;
+  $('lbCounter').textContent=`${pIdx+1} / ${photos.length}`;
+  $('lightbox').classList.add('active');
+}
+function lbNav(d){
+  if(!lbState) return;
+  lbState.idx=(lbState.idx+d+lbState.photos.length)%lbState.photos.length;
+  $('lbImg').src=lbState.photos[lbState.idx].image;
+  $('lbCounter').textContent=`${lbState.idx+1} / ${lbState.photos.length}`;
+}
+function closeLightbox(){$('lightbox').classList.remove('active');lbState=null}
+
+// ---- 登录 ----
+function openLogin(){$('loginOverlay').classList.add('active');$('loginError').textContent=''}
+function handleLogin(){
+  const u=$('loginUser').value.trim(),p=$('loginPass').value.trim();
+  const acc=JSON.parse(localStorage.getItem(ACCOUNT_KEY));
+  if(u===acc.username&&p===acc.password){
+    sessionStorage.setItem(SESSION_KEY,'true');
+    $('loginOverlay').classList.remove('active');
+    enterAdmin();
+  }else{$('loginError').textContent='账号或密码错误'}
+}
+function enterAdmin(){
+  if(!sessionStorage.getItem(SESSION_KEY)){openLogin();return}
+  $('homePage').style.display='none';
+  $('detailPage').style.display='none';
+  $('adminPage').style.display='block';
+  $('atUser').textContent='登录身份：'+JSON.parse(localStorage.getItem(ACCOUNT_KEY)).username;
+  buildSidebar();
+  switchAdmin('dashboard');
+}
+function confirmLogout(){
+  if(confirm('确定要退出内部管理吗？')){
+    sessionStorage.removeItem(SESSION_KEY);
+    showHome();
+  }
+}
+
+// ---- 侧边栏 ----
+function buildSidebar(){
+  $('adminSidebar').innerHTML=`
+    <a class="active" onclick="switchAdmin('dashboard')">📊 总览</a>
+    <a onclick="switchAdmin('exhibitions')">📂 展览</a>
+    <a onclick="switchAdmin('columns')">📝 专栏</a>
+    <a onclick="switchAdmin('curators')">👤 策展人</a>
+    <a onclick="switchAdmin('upload')">🖼 上传</a>
+    <a onclick="switchAdmin('bg')">🎨 背景颜色/图片</a>
+    <a class="sub-item" onclick="switchAdmin('board')">背景板颜色</a>
+    <a class="sub-item" onclick="switchAdmin('titleFont')">标题字体</a>
+    <a class="sub-item" onclick="switchAdmin('bodyFont')">正文字体</a>
+    <a class="sub-item" onclick="switchAdmin('curatorFont')">策展人字体</a>
+    <a class="sub-item" onclick="switchAdmin('customFont')">自定义字体</a>
+    <a onclick="switchAdmin('settings')">⚙ 设置</a>
+    <div class="sidebar-logout"><a onclick="confirmLogout()">🚪 退出登录</a></div>
+  `;
+}
+
+// ---- 后台切换 ----
+function switchAdmin(tab){
+  document.querySelectorAll('.admin-sidebar a').forEach(a=>a.classList.remove('active'));
+  const sel=document.querySelector(`.admin-sidebar a[onclick*="${tab}"]`);
+  if(sel) sel.classList.add('active');
+  applyTheme();
+  const main=$('adminMain');
+  const data=getData()||defaultData;
+  const theme=getTheme();
+
+  if(tab==='dashboard'){
+    const totalWorks=(data.exhibitions||[]).reduce((s,e)=>s+countPhotos(e),0);
+    const maxViews=Math.max(1,...(data.exhibitions||[]).map(e=>e.views||0));
+    main.innerHTML=`
+      <div class="breadcrumb">📊 总览</div>
+      <h2>📊 总览</h2>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num">${(data.exhibitions||[]).length}</div><div class="stat-label">展览</div></div>
+        <div class="stat-card"><div class="stat-num">${totalWorks}</div><div class="stat-label">作品</div></div>
+        <div class="stat-card"><div class="stat-num">${(data.exhibitions||[]).reduce((s,e)=>s+(e.views||0),0)}</div><div class="stat-label">总浏览</div></div>
+        <div class="stat-card"><div class="stat-num">${Math.round((localStorage.getItem(STORAGE_KEY)||'').length/1024)}KB</div><div class="stat-label">存储</div></div>
+        <div class="stat-card"><div class="stat-num">${(data.columns||[]).length}</div><div class="stat-label">专栏</div></div>
+        <div class="stat-card"><div class="stat-num">${(data.curators||[]).length}</div><div class="stat-label">策展人</div></div>
+        <div class="stat-card"><div class="stat-num">${(theme.customFonts||[]).length}</div><div class="stat-label">自定义字体</div></div>
+      </div>
+      <h3 style="color:#fff;margin:24px 0 12px">各展览浏览量</h3>
+      <div class="bar-chart">
+        ${(data.exhibitions||[]).map(ex=>{
+          const v=ex.views||0;
+          const pct=Math.round(v/maxViews*100);
+          return `<div class="bar-row"><div class="bar-label">${escapeHtml(ex.title)}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><div class="bar-val">${v}</div></div>`;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  else if(tab==='exhibitions'){
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 📂 展览</div>
+      <h2>📂 展览管理</h2>
+      <div class="admin-form" style="background:rgba(0,47,167,0.06);padding:20px;border-radius:14px;margin-bottom:24px">
+        <label>新增展览</label>
+        <input type="text" id="newExTitle" placeholder="展览名称">
+        <input type="text" id="newExTags" placeholder="标签（逗号分隔）">
+        <textarea id="newExStmt" placeholder="策展陈述"></textarea>
+        <button class="btn" onclick="addExhibition()">➕ 添加展览</button>
+      </div>
+      <h3 style="color:#fff;margin-bottom:12px">现有展览</h3>
+      ${(data.exhibitions||[]).map((ex,i)=>{
+        const st=ex.style||{};
+        return `
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h4 style="color:#fff;font-size:16px">${escapeHtml(ex.title)} <span style="color:rgba(255,255,255,0.3);font-size:12px">(${ex.views||0} 次浏览)</span></h4>
+            <button class="btn-danger" onclick="deleteExhibition('${ex.id}')">删除展览</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div>
+              <label>背景板颜色</label>
+              <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+                <input type="color" value="${st.boardColor||'#002fa7'}" onchange="updateExStyle('${ex.id}','boardColor',this.value)" style="width:44px;height:32px;border-radius:6px;cursor:pointer">
+                <span style="color:rgba(255,255,255,0.4);font-size:12px">${st.boardColor||'#002fa7'}</span>
+              </div>
+            </div>
+            <div>
+              <label>标题字体</label>
+              <select onchange="updateExStyle('${ex.id}','titleFont',this.value)">${fontOptions(st.titleFont||'')}</select>
+            </div>
+            <div>
+              <label>正文字体</label>
+              <select onchange="updateExStyle('${ex.id}','bodyFont',this.value)">${fontOptions(st.bodyFont||'')}</select>
+            </div>
+          </div>
+          <div style="margin-bottom:12px">
+            <label>策展陈述</label>
+            <textarea onchange="updateExStatement('${ex.id}',this.value)">${escapeHtml(ex.statement||'')}</textarea>
+          </div>
+          <div style="margin-top:12px">
+            <strong style="color:#fff;font-size:14px">组照 (${(ex.groups||[]).length})</strong>
+            <button class="btn" style="margin-left:12px;padding:6px 16px;font-size:13px" onclick="addGroupToEx('${ex.id}')">➕ 添加组照</button>
+            <div style="margin-top:10px">
+              ${(ex.groups||[]).map((g,gi)=>`
+                <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+                  <span style="color:rgba(255,255,255,0.6);font-size:13px">📷 ${escapeHtml(g.title||'未命名')} (${(g.photos||[]).length}张)</span>
+                  <button class="btn-danger" onclick="deleteGroup('${ex.id}','${g.id}')">🗑 删除组照</button>
+                </div>
+              `).join('')||'<div style="color:rgba(255,255,255,0.2);font-size:13px;padding:8px 0">暂无组照</div>'}
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    `;
+  }
+
+  else if(tab==='columns'){
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 📝 专栏</div>
+      <h2>📝 专栏管理</h2>
+      <div class="admin-form">
+        <label>新增文章</label>
+        <input type="text" id="newColTitle" placeholder="文章标题">
+        <input type="date" id="newColDate">
+        <textarea id="newColBody" style="min-height:160px" placeholder="正文"></textarea>
+        <button class="btn" onclick="addColumn()">➕ 添加</button>
+      </div>
+      <hr style="border-color:rgba(255,255,255,0.06);margin:24px 0">
+      <h3 style="color:#fff;margin-bottom:12px">现有文章</h3>
+      ${(data.columns||[]).map(c=>`
+        <div class="admin-list-item"><span>${escapeHtml(c.title)}</span><button class="btn-danger" onclick="deleteColumn('${c.id}')">删除</button></div>
+      `).join('')}
+    `;
+  }
+
+  else if(tab==='curators'){
+    const list=(data.curators||[]).map(c=>`
+      <div class="curator-admin-card">
+        ${c.photo?`<img class="cac-photo" src="${c.photo}">`:`<div class="cac-photo" style="display:flex;align-items:center;justify-content:center;background:#1a1a2e;color:rgba(255,255,255,0.2);font-size:28px">📷</div>`}
+        <div class="cac-info">
+          <h4>${escapeHtml(c.name)}</h4>
+          <div style="color:var(--gold);font-size:13px">${escapeHtml(c.role||'')}</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:6px;white-space:pre-wrap">${(c.bio||'').slice(0,100)}</div>
+          <div class="cac-actions">
+            <button class="btn" style="padding:6px 16px;font-size:13px" onclick="openCuratorEdit('${c.id}')">✏️ 编辑</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 👤 策展人</div>
+      <h2>👤 策展人管理</h2>
+      <div class="admin-form" style="background:rgba(0,47,167,0.06);padding:20px;border-radius:14px;margin-bottom:24px">
+        <label>新增策展人</label>
+        <input type="text" id="newCurName" placeholder="姓名">
+        <input type="text" id="newCurRole" placeholder="头衔">
+        <textarea id="newCurBio" placeholder="履历"></textarea>
+        <button class="btn" onclick="addCurator()">➕ 添加策展人</button>
+      </div>
+      <h3 style="color:#fff;margin-bottom:12px">现有策展人 (${data.curators.length})</h3>
+      ${list||'<div class="admin-empty">暂无策展人</div>'}
+    `;
+  }
+
+  else if(tab==='upload'){
+    let html=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🖼 上传</div>
+      <h2>🖼 上传作品</h2>
+      <div class="admin-form">
+        <label>选择展览</label>
+        <select id="uploadEx">${(data.exhibitions||[]).map(ex=>`<option value="${ex.id}">${escapeHtml(ex.title)}</option>`).join('')}</select>
+        <label>组照标题</label>
+        <input type="text" id="uploadGroupTitle" placeholder="如：霓虹与夕照">
+        <label>组照介绍词</label>
+        <textarea id="uploadGroupDesc" placeholder="这组照片的说明"></textarea>
+        <label>选择图片（可多选，最大 20MB/张）</label>
+        <div class="drop-zone" id="uploadDrop">
+          <div class="dz-icon">📂</div>
+          <div class="dz-text">拖拽图片到此处，或点击选择多个文件</div>
+          <div class="dz-hint">支持 JPG / PNG / WebP，可一次选多张</div>
+          <button class="dz-btn" type="button" onclick="document.getElementById('uploadInput').click()">选择图片文件</button>
+          <input type="file" id="uploadInput" accept="image/*" multiple style="display:none">
+        </div>
+        <div class="file-list" id="uploadFileList"></div>
+        <div class="progress" id="uploadProgress"><div class="progress-bar" id="uploadBar"></div></div>
+        <button class="btn" onclick="doUpload()">⬆ 上传并保存组照</button>
+      </div>
+    `;
+    main.innerHTML=html;
+    setupUploadHandlers();
+  }
+
+  else if(tab==='bg'){
+    const t=theme;
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🎨 外观 / 背景颜色/图片</div>
+      <h2>🎨 背景颜色 / 图片</h2>
+      <label>背景颜色</label>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px">
+        <input type="color" id="bgColor" value="${t.bgColor||'#0a1a10'}" onchange="updateBgColor(this.value)" style="width:56px;height:40px;border-radius:8px;cursor:pointer">
+        <span style="color:rgba(255,255,255,0.4);font-size:13px" id="bgColorVal">${t.bgColor||'#0a1a10'}</span>
+      </div>
+      <label>背景图片（拖拽或点击上传）</label>
+      <div class="drop-zone" id="bgDrop">
+        <div class="dz-icon">🖼</div>
+        <div class="dz-text">${t.bgImage?'已上传背景图片 ✓':'拖拽背景图片到此处，或点击选择'}</div>
+        <div class="dz-hint">建议 1920px 以上，JPG/PNG，≤ 5MB</div>
+        <button class="dz-btn" type="button" onclick="document.getElementById('bgInput').click()">选择背景图片</button>
+        <input type="file" id="bgInput" accept="image/*" style="display:none">
+      </div>
+      <label>暗化遮罩 <span id="bgDarkenVal" style="color:rgba(255,255,255,0.4)">${Math.round((t.bgDarken||0.4)*100)}%</span></label>
+      <input type="range" min="0" max="90" value="${Math.round((t.bgDarken||0.4)*100)}" oninput="updateBgDarken(this.value)" style="width:100%;margin:8px 0">
+      <div class="save-bar">
+        <button class="btn" onclick="saveThemeChanges()">💾 保存外观</button>
+      </div>
+    `;
+    setupBgHandlers();
+  }
+
+  else if(tab==='board'){
+    const colors=['#002fa7','#0d2818','#1a2332','#2d1b00','#1a1a2e','#3a0d0d','#0d3a2d','#2d0d3a','#1a2d3a','#3a2d0d'];
+    const t=theme;
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🎨 外观 / 背景板颜色</div>
+      <h2>背景板颜色</h2>
+      <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:12px">选择或自定义每张照片展板的颜色</p>
+      <div class="color-row">
+        ${colors.map(c=>`<div class="color-swatch ${t.boardColor===c?'active':''}" style="background:${c}" onclick="setBoardColor('${c}')" title="${c}"></div>`).join('')}
+      </div>
+      <div class="color-picker-wrap">
+        <input type="color" id="boardColorPicker" value="${t.boardColor||'#1a2332'}" oninput="setBoardColor(this.value)">
+        <span>自定义颜色: <span id="boardColorVal">${t.boardColor||'#1a2332'}</span></span>
+      </div>
+      <div class="preview-area">
+        <h4>实时预览</h4>
+        <div class="preview-board landscape" id="previewBoard" style="background:${t.boardColor||'#1a2332'}">
+          <div class="pb-img">横构图预览</div>
+        </div>
+        <div class="preview-board portrait" style="background:${t.boardColor||'#1a2332'}">
+          <div class="pb-img">竖构图</div>
+        </div>
+      </div>
+      <div class="save-bar">
+        <button class="btn" onclick="saveThemeChanges()">💾 保存背景板颜色</button>
+      </div>
+    `;
+  }
+
+  else if(tab==='titleFont'){
+    const t=theme;
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🎨 外观 / 标题字体</div>
+      <h2>标题字体</h2>
+      <div id="titleFontList">${renderFontCards(t.titleFont||'','title')}</div>
+      <div class="preview-area">
+        <h4>实时预览</h4>
+        <div class="preview-text">
+          <div class="pt-title" style="font-family:${t.titleFont||'serif'}">镜中世界 · 展览标题预览</div>
+        </div>
+      </div>
+      <div class="save-bar">
+        <button class="btn" onclick="saveThemeChanges()">💾 保存标题字体</button>
+      </div>
+    `;
+  }
+
+  else if(tab==='bodyFont'){
+    const t=theme;
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🎨 外观 / 正文字体</div>
+      <h2>正文字体</h2>
+      <div id="bodyFontList">${renderFontCards(t.bodyFont||'','body')}</div>
+      <div class="preview-area">
+        <h4>实时预览</h4>
+        <div class="preview-text">
+          <div class="pt-body" style="font-family:${t.bodyFont||'sans-serif'}">这是一段正文预览文字。当克莱因蓝遇见深绿，当胶片质感碰撞算法美学。2026年的夏天，色彩不再只是视觉经验。</div>
+        </div>
+      </div>
+      <div class="save-bar">
+        <button class="btn" onclick="saveThemeChanges()">💾 保存正文字体</button>
+      </div>
+    `;
+  }
+
+  else if(tab==='curatorFont'){
+    const t=theme;
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🎨 外观 / 策展人字体</div>
+      <h2>策展人字体</h2>
+      <div id="curatorFontList">${renderFontCards(t.curatorFont||'','curator')}</div>
+      <div class="preview-area">
+        <h4>实时预览</h4>
+        <div class="preview-text">
+          <div class="pt-title" style="font-family:${t.curatorFont||'serif'}">张昊文</div>
+          <div class="pt-body" style="font-family:${t.curatorFont||'sans-serif'}">策展人 · 摄影研究者</div>
+        </div>
+      </div>
+      <div class="save-bar">
+        <button class="btn" onclick="saveThemeChanges()">💾 保存策展人字体</button>
+      </div>
+    `;
+  }
+
+  else if(tab==='customFont'){
+    const t=theme;
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / 🎨 外观 / 自定义字体</div>
+      <h2>自定义字体（批量上传）</h2>
+      <div class="drop-zone" id="fontDrop">
+        <div class="dz-icon">📂</div>
+        <div class="dz-text">拖拽字体文件到此处，或点击选择多个文件</div>
+        <div class="dz-hint">支持 Ctrl/Cmd 多选 · 最大 10MB/个 · 自动识别 ttf/otf/woff/woff2</div>
+        <button class="dz-btn" type="button" onclick="document.getElementById('fontInput').click()">选择字体文件</button>
+        <input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2" multiple style="display:none">
+      </div>
+      <div class="file-list" id="fontFileList"></div>
+      <div class="progress" id="fontProgress"><div class="progress-bar" id="fontBar"></div></div>
+      <button class="btn" onclick="processFontUpload()">⬆ 批量上传并注册字体</button>
+      <hr style="border-color:rgba(255,255,255,0.06);margin:24px 0">
+      <h3 style="color:#fff;margin-bottom:12px">已注册的自定义字体 (${(t.customFonts||[]).length})</h3>
+      <div id="customFontList">
+        ${(t.customFonts||[]).map((f,i)=>`
+          <div class="admin-list-item">
+            <span><strong style="color:#fff">${escapeHtml(f.name)}</strong> <span style="color:rgba(255,255,255,0.3);font-size:12px">(${f.format})</span> <span style="font-family:'${f.name}';color:rgba(255,255,255,0.5);font-size:14px;margin-left:8px">${escapeHtml(f.name)} 效果预览</span></span>
+            <button class="btn-danger" onclick="deleteCustomFont(${i})">删除</button>
+          </div>
+        `).join('')||'<div class="admin-empty">暂无自定义字体</div>'}
+      </div>
+    `;
+    setupFontHandlers();
+  }
+
+  else if(tab==='settings'){
+    main.innerHTML=`
+      <div class="breadcrumb"><a onclick="switchAdmin('dashboard')">总览</a> / ⚙ 设置</div>
+      <h2>⚙ 设置</h2>
+      <div class="admin-form">
+        <label>导出全部数据（JSON 备份）</label>
+        <button class="btn" onclick="exportData()">📥 导出数据</button>
+        <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0">
+        <label>导出外观配置（theme.json）</label>
+        <button class="btn" onclick="exportTheme()">🎨 导出外观</button>
+        <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0">
+        <label>导入数据备份</label>
+        <input type="file" id="importFile" accept=".json">
+        <button class="btn" onclick="importData()">📤 导入</button>
+        <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0">
+        <label>修改密码</label>
+        <input type="password" id="newPass" placeholder="新密码（至少4位）">
+        <button class="btn" onclick="changePass()">🔑 修改</button>
+        <hr style="border-color:rgba(255,255,255,0.06);margin:20px 0">
+        <label>重置浏览量统计</label>
+        <button class="btn-danger" onclick="resetViews()">清零所有浏览量</button>
+        <p id="settingsMsg" style="color:#8ab4ff;margin-top:12px;font-size:13px"></p>
+      </div>
+    `;
+  }
+}
+
+// ---- 字体卡片渲染 ----
+function renderFontCards(activeVal,type){
+  const builtIn=[
+    {name:'Noto Serif SC',sample:'衬线标题示例'},
+    {name:'Noto Sans SC',sample:'无衬线正文示例'},
+    {name:'Playfair Display',sample:'Playfair Title'},
+    {name:'Inter',sample:'Inter Body Text'},
+    {name:'Cormorant Garamond',sample:'Cormorant 优雅衬线'},
+    {name:'serif',sample:'系统衬线'},
+    {name:'sans-serif',sample:'系统无衬线'}
+  ];
+  const custom=(getTheme().customFonts||[]).map(f=>({name:f.name,sample:f.name+' 自定义'}));
+  const all=[...builtIn,...custom];
+  return all.map(f=>{
+    const isActive=activeVal===f.name;
+    return `<div class="font-card ${isActive?'active':''}" onclick="setFont('${type}','${f.name}')" style="font-family:${f.name}">
+      <div class="fc-name">${escapeHtml(f.name)}</div>
+      <div class="fc-sample">${escapeHtml(f.sample)}</div>
+    </div>`;
+  }).join('');
+}
+
+function fontOptions(val){
+  const builtIn=['','Noto Serif SC','Noto Sans SC','Playfair Display','Inter','Cormorant Garamond'];
+  const custom=(getTheme().customFonts||[]).map(f=>f.name);
+  const all=[...new Set([...builtIn,...custom])];
+  return all.map(n=>`<option value="${n}" ${val===n?'selected':''}>${n||'(默认)'}</option>`).join('');
+}
+
+// ---- 外观操作 ----
+function setBoardColor(c){
+  const t=getTheme();
+  t.boardColor=c;
+  saveTheme(t);
+  document.documentElement.style.setProperty('--board-color',c);
+  const picker=$('boardColorPicker');if(picker) picker.value=c;
+  const val=$('boardColorVal');if(val) val.textContent=c;
+  const pb=$('previewBoard');if(pb) pb.style.background=c;
+  document.querySelectorAll('.color-swatch').forEach(s=>{
+    s.classList.toggle('active',s.style.background===c||s.title===c);
+  });
+}
+function setFont(type,name){
+  const t=getTheme();
+  if(type==='title') t.titleFont=name;
+  if(type==='body') t.bodyFont=name;
+  if(type==='curator') t.curatorFont=name;
+  saveTheme(t);
+  applyTheme();
+  switchAdmin(type==='title'?'titleFont':type==='body'?'bodyFont':'curatorFont');
+}
+function updateBgColor(c){
+  const t=getTheme();t.bgColor=c;saveTheme(t);
+  document.body.style.backgroundColor=c;
+  const v=$('bgColorVal');if(v) v.textContent=c;
+}
+function updateBgDarken(v){
+  const t=getTheme();t.bgDarken=parseInt(v)/100;saveTheme(t);
+  const label=$('bgDarkenVal');if(label) label.textContent=v+'%';
+  if(t.bgImage) document.body.style.backgroundImage=`linear-gradient(rgba(0,0,0,${t.bgDarken}),rgba(0,0,0,${t.bgDarken})),url(${t.bgImage})`;
+}
+function saveThemeChanges(){saveTheme(getTheme());applyTheme();toast('外观已保存 ✓','success')}
+
+// ---- 拖拽/上传处理 ----
+function setupUploadHandlers(){
+  const dz=$('uploadDrop'),inp=$('uploadInput');
+  let pending=[];
+  function addFiles(files){
+    [...files].forEach(f=>{if(f.type.startsWith('image/')) pending.push(f)});
+    renderPending();
+  }
+  function renderPending(){
+    $('uploadFileList').innerHTML=pending.map((f,i)=>`<div class="file-item"><span class="fi-name">📷 ${escapeHtml(f.name)}</span><span class="fi-size">${(f.size/1024).toFixed(0)}KB</span><span class="fi-remove" onclick="removePending(${i})">✕</span></div>`).join('');
+  }
+  inp.onchange=e=>{addFiles(e.target.files);inp.value=''};
+  dz.ondragover=e=>{e.preventDefault();dz.classList.add('dragover')};
+  dz.ondragleave=()=>dz.classList.remove('dragover');
+  dz.ondrop=e=>{e.preventDefault();dz.classList.remove('dragover');addFiles(e.dataTransfer.files)};
+  window.removePending=i=>{pending.splice(i,1);renderPending()};
+  window._pendingUpload=()=>pending;
+  window._clearPending=()=>{pending=[];renderPending()};
+}
+
+function setupBgHandlers(){
+  const inp=$('bgInput'),dz=$('bgDrop');
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f) return;
+    if(f.size>5*1024*1024){toast('背景图片不能超过 5MB','error');return}
+    const r=new FileReader();
+    r.onload=()=>{
+      const t=getTheme();t.bgImage=r.result;saveTheme(t);applyTheme();
+      dz.querySelector('.dz-text').textContent='已上传背景图片 ✓';
+      toast('背景图片已加载，点保存生效','success');
+    };
+    r.readAsDataURL(f);
+  };
+}
+
+function setupFontHandlers(){
+  const dz=$('fontDrop'),inp=$('fontInput');
+  let pending=[];
+  function addFiles(files){
+    [...files].forEach(f=>{
+      const ext=(f.name.split('.').pop()||'').toLowerCase();
+      if(['ttf','otf','woff','woff2'].includes(ext)) pending.push({file:f,ext});
+      else toast('不支持的格式: '+f.name,'error');
+    });
+    renderPending();
+  }
+  function renderPending(){
+    $('fontFileList').innerHTML=pending.map((p,i)=>`<div class="file-item"><span class="fi-name">📄 ${escapeHtml(p.file.name)}</span><span class="fi-size">${(p.file.size/1024).toFixed(0)}KB · ${p.ext}</span><span class="fi-remove" onclick="removeFontPending(${i})">✕</span></div>`).join('');
+  }
+  inp.onchange=e=>{addFiles(e.target.files);inp.value=''};
+  dz.ondragover=e=>{e.preventDefault();dz.classList.add('dragover')};
+  dz.ondragleave=()=>dz.classList.remove('dragover');
+  dz.ondrop=e=>{e.preventDefault();dz.classList.remove('dragover');addFiles(e.dataTransfer.files)};
+  window.removeFontPending=i=>{pending.splice(i,1);renderPending()};
+  window._pendingFonts=()=>pending;
+  window._clearFonts=()=>{pending=[];renderPending()};
+}
+
+// ---- 字体上传处理（v8 核心修复）----
+async function processFontUpload(){
+  const pending=window._pendingFonts?window._pendingFonts():[];
+  if(!pending.length){toast('请先选择字体文件','error');return}
+  const bar=$('fontBar'),prog=$('fontProgress');
+  prog.classList.add('active');
+  const t=getTheme();
+  let count=0;
+  for(let i=0;i<pending.length;i++){
+    const {file,ext}=pending[i];
+    bar.style.width=((i/pending.length)*100)+'%';
+    if(file.size>10*1024*1024){toast(file.name+' 超过 10MB，已跳过','error');continue}
+    if(file.size>500*1024) toast(file.name+' 较大 ('+(file.size/1024).toFixed(0)+'KB)，建议用 woff2 子集化','error');
+    const data=await fileToBase64(file);
+    const format=extToFormat(ext);
+    const name=file.name.replace(/\.[^.]+$/,'');
+    const exists=(t.customFonts||[]).some(f=>f.name===name);
+    if(exists){toast(name+' 已存在，已覆盖','error')}
+    t.customFonts=(t.customFonts||[]).filter(f=>f.name!==name);
+    t.customFonts.push({name,format,data});
+    count++;
+  }
+  bar.style.width='100%';
+  try{saveTheme(t)}catch(e){toast('存储失败：localStorage 已满，请删除部分字体','error');return}
+  applyCustomFonts();
+  window._clearFonts();
+  prog.classList.remove('active');
+  bar.style.width='0%';
+  toast('成功注册 '+count+' 个字体 ✓','success');
+  switchAdmin('customFont');
+  // 刷新所有字体下拉
+  if($('titleFontList')) switchAdmin('titleFont');
+}
+
+function extToFormat(ext){
+  if(ext==='ttf') return 'truetype';
+  if(ext==='otf') return 'opentype';
+  if(ext==='woff') return 'woff';
+  if(ext==='woff2') return 'woff2';
+  return 'truetype';
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();
+    r.onload=()=>resolve(r.result);
+    r.onerror=reject;
+    r.readAsDataURL(file);
+  });
+}
+
+function applyCustomFonts(){
+  const t=getTheme();
+  let style=document.getElementById('custom-fonts-style');
+  if(!style){style=document.createElement('style');style.id='custom-fonts-style';document.head.appendChild(style)}
+  let css='';
+  (t.customFonts||[]).forEach(f=>{
+    css+=`@font-face{font-family:"${f.name}";src:url(${f.data});font-display:swap;}\n`;
+  });
+  style.textContent=css;
+}
+
+function deleteCustomFont(idx){
+  if(!confirm('确定删除这个字体？')) return;
+  const t=getTheme();
+  t.customFonts.splice(idx,1);
+  saveTheme(t);
+  applyCustomFonts();
+  switchAdmin('customFont');
+  toast('字体已删除','success');
+}
+
+// ---- 上传作品 ----
+async function doUpload(){
+  const pending=window._pendingUpload?window._pendingUpload():[];
+  if(!pending.length){toast('请先选择图片','error');return}
+  const exId=$('uploadEx').value;
+  const groupTitle=$('uploadGroupTitle').value.trim()||'未命名组照';
+  const groupDesc=$('uploadDesc').value.trim()||'';
+  const bar=$('uploadBar'),prog=$('uploadProgress');
+  prog.classList.add('active');
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===exId);
+  if(!ex){toast('展览不存在','error');return}
+  const photos=[];
+  for(let i=0;i<pending.length;i++){
+    const f=pending[i];
+    bar.style.width=((i/pending.length)*100)+'%';
+    if(f.size>20*1024*1024){toast(f.name+' 超过 20MB','error');continue}
+    const compressed=await compressImage(f);
+    photos.push({title:f.name.replace(/\.[^.]+$/,'')||'未命名',desc:groupDesc,image:compressed});
+  }
+  const group={id:'g'+Date.now(),title:groupTitle,desc:groupDesc,photos};
+  ex.groups=(ex.groups||[]);
+  ex.groups.push(group);
+  saveData(data);
+  bar.style.width='100%';
+  prog.classList.remove('active');
+  bar.style.width='0%';
+  window._clearPending();
+  renderHome();
+  toast('组照「'+groupTitle+'」上传成功 ✓ ('+photos.length+'张)','success');
+}
+
+function compressImage(file){
+  return new Promise((resolve)=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const max=2400;let w=img.width,h=img.height;
+        if(w>max||h>max){if(w>h){w=max;h=Math.round(img.height*(max/img.width))}else{h=max;w=Math.round(img.width*(max/img.height))}}
+        const c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        let q=0.88,result;
+        for(let i=0;i<5;i++){result=c.toDataURL('image/jpeg',q);if(result.length<1048576)break;q-=0.1}
+        resolve(result);
+      };
+      img.onerror=()=>resolve('');
+      img.src=e.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+// ---- 展览操作 ----
+function addExhibition(){
+  const t=$('newExTitle').value.trim();
+  if(!t){toast('请输入展览名称','error');return}
+  const data=getData();
+  data.exhibitions.push({id:'ex'+Date.now(),title:t,tags:($('newExTags').value||'').split(/[,，]/).map(s=>s.trim()).filter(Boolean),statement:$('newExStmt').value||'暂无策展陈述',artworks:[],groups:[],views:0,style:{boardColor:'#002fa7',titleFont:'',bodyFont:''}});
+  saveData(data);
+  switchAdmin('exhibitions');
+  renderHome();
+  toast('展览已添加 ✓','success');
+}
+function deleteExhibition(id){
+  if(!confirm('确定删除该展览及其所有组照和作品？')) return;
+  const data=getData();
+  data.exhibitions=data.exhibitions.filter(e=>e.id!==id);
+  saveData(data);
+  switchAdmin('exhibitions');
+  renderHome();
+  toast('展览已删除','success');
+}
+function updateExStyle(exId,key,val){
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===exId);
+  if(!ex) return;
+  ex.style=ex.style||{};ex.style[key]=val;
+  saveData(data);
+  if(key==='boardColor'){document.documentElement.style.setProperty('--board-color',val)}
+  toast('已更新 '+key,'success');
+}
+function updateExStatement(exId,val){
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===exId);
+  if(!ex) return;
+  ex.statement=val;saveData(data);renderHome();
+  toast('策展陈述已更新','success');
+}
+function addGroupToEx(exId){
+  const title=prompt('组照标题：');
+  if(!title) return;
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===exId);
+  if(!ex) return;
+  ex.groups=(ex.groups||[]);
+  ex.groups.push({id:'g'+Date.now(),title,desc:'',photos:[]});
+  saveData(data);
+  switchAdmin('exhibitions');
+  renderHome();
+  toast('组照已添加 ✓','success');
+}
+function deleteGroup(exId,gId){
+  if(!confirm('确定删除该组照及其所有照片？')) return;
+  const data=getData();
+  const ex=(data.exhibitions||[]).find(e=>e.id===exId);
+  if(!ex) return;
+  ex.groups=(ex.groups||[]).filter(g=>g.id!==gId);
+  saveData(data);
+  switchAdmin('exhibitions');
+  renderHome();
+  toast('组照已删除','success');
+}
+
+// ---- 专栏操作 ----
+function addColumn(){
+  const t=$('newColTitle').value.trim();
+  if(!t){toast('请输入标题','error');return}
+  const data=getData();
+  data.columns.push({id:'c'+Date.now(),title:t,date:$('newColDate').value||new Date().toISOString().slice(0,10),body:$('newColBody').value||''});
+  saveData(data);
+  switchAdmin('columns');
+  renderHome();
+  toast('文章已添加 ✓','success');
+}
+function deleteColumn(id){
+  if(!confirm('确定删除？')) return;
+  const data=getData();
+  data.columns=data.columns.filter(c=>c.id!==id);
+  saveData(data);
+  switchAdmin('columns');
+  renderHome();
+  toast('已删除','success');
+}
+
+// ---- 策展人操作 ----
+function addCurator(){
+  const name=$('newCurName').value.trim();
+  if(!name){toast('请输入姓名','error');return}
+  const data=getData();
+  data.curators=(data.curators||[]);
+  data.curators.push({id:'cur'+Date.now(),name,role:$('newCurRole').value||'策展人',bio:$('newCurBio').value||'',photo:''});
+  saveData(data);
+  switchAdmin('curators');
+  renderHome();
+  toast('策展人已添加 ✓','success');
+}
+
+let _editCuratorId=null;
+function openCuratorEdit(id){
+  const data=getData();
+  const c=(data.curators||[]).find(x=>x.id===id);
+  if(!c) return;
+  _editCuratorId=id;
+  $('curatorEditTitle').textContent='编辑：'+c.name;
+  $('ceName').value=c.name;
+  $('ceRole').value=c.role||'';
+  $('ceBio').value=c.bio||'';
+  $('cePhotoPreview').src=c.photo||'';
+  $('cePhotoPreview').style.display=c.photo?'block':'none';
+  $('curatorEditModal').classList.add('active');
+  const inp=$('cePhotoInput');
+  inp.onchange=e=>{
+    const f=e.target.files[0];if(!f) return;
+    if(f.size>5*1024*1024){toast('写真不能超过 5MB','error');return}
+    const r=new FileReader();
+    r.onload=()=>{
+      $('cePhotoPreview').src=r.result;
+      $('cePhotoPreview').style.display='block';
+      toast('写真已加载，点保存生效','success');
+    };
+    r.readAsDataURL(f);
+  };
+}
+function closeCuratorEdit(){$('curatorEditModal').classList.remove('active');_editCuratorId=null}
+function saveCuratorEdit(){
+  if(!_editCuratorId) return;
+  const data=getData();
+  const c=(data.curators||[]).find(x=>x.id===_editCuratorId);
+  if(!c) return;
+  c.name=$('ceName').value.trim();
+  c.role=$('ceRole').value.trim();
+  c.bio=$('ceBio').value.trim();
+  if($('cePhotoPreview').src) c.photo=$('cePhotoPreview').src;
+  saveData(data);
+  closeCuratorEdit();
+  switchAdmin('curators');
+  renderHome();
+  toast('策展人信息已保存 ✓','success');
+}
+function deleteCuratorFromEdit(){
+  if(!_editCuratorId) return;
+  if(!confirm('确定删除该策展人？')) return;
+  const data=getData();
+  data.curators=(data.curators||[]).filter(x=>x.id!==_editCuratorId);
+  saveData(data);
+  closeCuratorEdit();
+  switchAdmin('curators');
+  renderHome();
+  toast('策展人已删除','success');
+}
+
+// ---- 设置操作 ----
+function exportData(){
+  const d=localStorage.getItem(STORAGE_KEY)||'{}';
+  const blob=new Blob([d],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='data.json';a.click();
+  URL.revokeObjectURL(url);
+  toast('data.json 已导出 ✓','success');
+}
+function exportTheme(){
+  const t=localStorage.getItem(THEME_KEY)||'{}';
+  const blob=new Blob([t],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='theme.json';a.click();
+  URL.revokeObjectURL(url);
+  toast('theme.json 已导出 ✓','success');
+}
+function importData(){
+  const f=$('importFile').files[0];if(!f){toast('请选择文件','error');return}
+  const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.target.result);if(!d.exhibitions) throw 0;saveData(d);renderHome();switchAdmin('dashboard');toast('导入成功 ✓','success')}catch(e){toast('文件格式不正确','error')}};
+  r.readAsText(f);
+}
+function changePass(){
+  const np=$('newPass').value.trim();
+  if(!np||np.length<4){toast('密码至少4位','error');return}
+  const acc=JSON.parse(localStorage.getItem(ACCOUNT_KEY));
+  acc.password=np;localStorage.setItem(ACCOUNT_KEY,JSON.stringify(acc));
+  $('settingsMsg').textContent='✅ 密码已修改';
+  $('newPass').value='';
+  toast('密码已更新 ✓','success');
+}
+function resetViews(){
+  if(!confirm('确定清零所有展览的浏览量？')) return;
+  const data=getData();
+  (data.exhibitions||[]).forEach(e=>e.views=0);
+  saveData(data);
+  renderHome();
+  switchAdmin('dashboard');
+  toast('浏览量已清零','success');
+}
+
+// ---- 键盘/点击 ----
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    $('loginOverlay').classList.remove('active');
+    closeCuratorEdit();
+    closeLightbox();
+  }
+  if($('lightbox').classList.contains('active')){
+    if(e.key==='ArrowLeft') lbNav(-1);
+    if(e.key==='ArrowRight') lbNav(1);
+  }
+});
+$('loginOverlay').addEventListener('click',function(e){if(e.target===this) this.classList.remove('active')});
+$('curatorEditModal').addEventListener('click',function(e){if(e.target===this) closeCuratorEdit()});
+</script>
+</body>
+</html>
