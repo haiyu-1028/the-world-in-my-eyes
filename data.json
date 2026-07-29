@@ -3,38 +3,62 @@
     {
       "id": "ex0",
       "title": "2025夏天的颜色",
-      "tags": ["摄影·年度特展"],
+      "tags": [
+        "摄影·年度特展"
+      ],
       "statement": "银盐的颗粒感与数字像素的冷冽在此交织。2025年的夏天，我们试图用镜头捕捉那些即将消逝的色彩——褪色的广告牌、夕照下的塑料花、地铁站里陌生人的瞳孔。摄影史告诉我们，每一次对色彩的记录，都是一次对时间的挽留。",
       "groups": [],
       "views": 0,
-      "style": { "boardColor": "#002fa7", "titleFont": "", "bodyFont": "" }
+      "style": {
+        "boardColor": "#002fa7",
+        "titleFont": "",
+        "bodyFont": ""
+      }
     },
     {
       "id": "ex1",
       "title": "2026夏天的颜色",
-      "tags": ["摄影·年度特展"],
+      "tags": [
+        "摄影·年度特展"
+      ],
       "statement": "当克莱因蓝遇见深绿，当胶片质感碰撞算法美学。2026年的夏天，色彩不再只是视觉经验，而成为了一种哲学追问。正如伊夫·克莱因所言：\"蓝色是没有维度的，它超越了维度。\"",
       "groups": [],
       "views": 0,
-      "style": { "boardColor": "#0d2818", "titleFont": "", "bodyFont": "" }
+      "style": {
+        "boardColor": "#0d2818",
+        "titleFont": "",
+        "bodyFont": ""
+      }
     },
     {
       "id": "ex2",
       "title": "快乐之家",
-      "tags": ["纪实·长期项目"],
+      "tags": [
+        "纪实·长期项目"
+      ],
       "statement": "从维多利亚时代的家庭肖像到荒木经惟的私写真，家庭摄影始终在真实与表演之间摇摆。\"快乐之家\"试图在这个张力中寻找一条属于自己的道路——那些看似平凡的日常瞬间，或许才是摄影最动人的力量。",
       "groups": [],
       "views": 0,
-      "style": { "boardColor": "#1a3320", "titleFont": "", "bodyFont": "" }
+      "style": {
+        "boardColor": "#1a3320",
+        "titleFont": "",
+        "bodyFont": ""
+      }
     },
     {
       "id": "ex3",
       "title": "风光与星空",
-      "tags": ["风景摄影·自然纪实"],
+      "tags": [
+        "风景摄影·自然纪实"
+      ],
       "statement": "从19世纪探险摄影师卡尔顿·沃特金斯穿越内华达山脉的玻璃底片，到安塞尔·亚当斯的月升时分，再到当代星空摄影师的银河长曝——人类对大地与星空的仰望从未改变。",
       "groups": [],
       "views": 0,
-      "style": { "boardColor": "#1a1a2e", "titleFont": "", "bodyFont": "" }
+      "style": {
+        "boardColor": "#1a1a2e",
+        "titleFont": "",
+        "bodyFont": ""
+      }
     }
   ],
   "columns": [
