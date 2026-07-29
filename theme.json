@@ -1,8 +1,8 @@
 {
-  "customFonts": [],
   "bg": "",
-  "boardColor": "#12182b",
+  "boardColor": "#111827",
   "titleFont": "",
   "bodyFont": "",
-  "curatorFont": ""
+  "curatorFont": "",
+  "customFonts": []
 }
